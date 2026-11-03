@@ -132,6 +132,7 @@ td { padding: 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
 .tbl--occ table { min-width: 1040px; }
 .tbl--occ th:first-child, .tbl--occ td:first-child { min-width: 460px; width: 40%; }
 td.n, th.n { text-align: right; white-space: nowrap; }
+th.wrap { white-space: normal; min-width: 12ch; max-width: 18ch; } th.wrap button { white-space: normal; text-align: right; }
 td.n { font-family: var(--font-mono); font-size: 14px; }
 td b { font-weight: 600; }
 .soc { font-size: 13px; color: var(--muted); }
