@@ -86,6 +86,9 @@ setExplain((code) => {
 $("rank-note").textContent = `Jobs since May 2019 in each of the 22 groups of occupations. The dark tick marks all occupations, ${pct(ALLJ)}. Source: BLS OEWS major-group rows, May 2019 (MB3 research estimate) and 2025.`;
 
 /* ---------- the chart: projected jobs (x) against pay after inflation (y), every occupation with comparable 2019 data ---------- */
+/* Red dots: occupations whose 2025 median pay is below the national median, the same line the Exposure page uses. */
+const PAY_MEDIAN = W.total.wage[3];
+$("chart").insertAdjacentHTML("beforebegin", `<div class="swatches" id="pay-key" style="margin:4px 0 6px"><span><i style="--c:var(--brand)"></i>Median pay below the national median (${usd.format(PAY_MEDIAN)}, 2025)</span><span><i style="--c:var(--mark)"></i>At or above it</span></div>`);
 function drawScatter(Wd) {
   if (!current) return;
   const e = current, box = $("chart"); box.innerHTML = "";
@@ -111,11 +114,12 @@ function drawScatter(Wd) {
     const bl = (y, t) => txt(s, Wd - R + 10, y, t, { class: "lab2", style: "font-style:italic" });
     bl(Yv(TOL) - 8, "Ahead of prices"); bl(Yv(0) + 4, `About even (±${TOL}%)`); bl(Yv(-TOL) + 22, "Behind prices");
   }
-  const rad = (o) => (narrow ? 2 : 2.4) + Math.sqrt(o.emp[3] / 1000) * (narrow ? 0.14 : 0.2), mark = css("--mark"), dot = css("--dot"), surf = css("--surface");
+  const rad = (o) => (narrow ? 2 : 2.4) + Math.sqrt(o.emp[3] / 1000) * (narrow ? 0.14 : 0.2), mark = css("--mark"), dot = css("--dot"), surf = css("--surface"), red = css("--brand");
+  const lowPay = (o) => o.w[3] !== null && o.w[3] < PAY_MEDIAN;
   const order = pts.slice().sort((a, b) => (inSel(e, a) - inSel(e, b)) || b.emp[3] - a.emp[3]);
   order.forEach((o) => {
-    const on = inSel(e, o), c = svgEl("circle", { cx: X(o.pr), cy: Yv(o.r19), r: rad(o), fill: on ? mark : dot, "fill-opacity": on ? (e.type === "all" ? 0.55 : 0.85) : 0.55, stroke: on ? surf : "none", "stroke-width": 1.2, "data-soc": o.soc }, s);
-    setTip(c, `${o.t} (${o.soc})`, `Pay ${pct(o.r19)} after inflation since 2019, ${band(o.r19) === "even" ? "about even with prices" : band(o.r19) === "ahead" ? "ahead of prices" : "behind prices"} · jobs ${pct(o.pr)} projected to 2035 · ${fmt.format(o.emp[3])} jobs in 2025${out.includes(o) ? " (beyond the plotted range, drawn at the edge)" : ""}`, "Sources: BLS OEWS 2019 (MB3) and 2025; BLS CPI-U; BLS Employment Projections 2025–35");
+    const on = inSel(e, o), c = svgEl("circle", { cx: X(o.pr), cy: Yv(o.r19), r: rad(o), fill: on ? (lowPay(o) ? red : mark) : dot, "fill-opacity": on ? (e.type === "all" ? 0.55 : 0.85) : 0.55, stroke: on ? surf : "none", "stroke-width": 1.2, "data-soc": o.soc }, s);
+    setTip(c, `${o.t} (${o.soc})`, `Pay ${pct(o.r19)} after inflation since 2019, ${band(o.r19) === "even" ? "about even with prices" : band(o.r19) === "ahead" ? "ahead of prices" : "behind prices"} · jobs ${pct(o.pr)} projected to 2035 · ${fmt.format(o.emp[3])} jobs in 2025${o.w[3] !== null ? ` · median pay ${usd.format(o.w[3])}, ${lowPay(o) ? "below" : "at or above"} the national median` : ""}${out.includes(o) ? " (beyond the plotted range, drawn at the edge)" : ""}`, "Sources: BLS OEWS 2019 (MB3) and 2025; BLS CPI-U; BLS Employment Projections 2025–35");
     c.addEventListener("click", () => setSel({ type: "occ", id: o.soc }));
   });
   if (e.type === "occ" && e.o.own19 && e.o.r19 !== null) svgEl("circle", { cx: X(e.o.pr), cy: Yv(e.o.r19), r: rad(e.o) + 4, class: "sel-ring" }, s);
@@ -225,7 +229,7 @@ function render(e) {
   $("headline").innerHTML = leadSentence(e); $("subline").innerHTML = payLine(e); $("context").innerHTML = contextLine(e); $("method").innerHTML = methodNote(e);
   renderRank(rankRows(), e); readout(e);
   const plotted = OCC.filter((o) => o.own19 && o.r19 !== null).length, nd = dagger(OCC), list = listOf(e);
-  $("chart-note").textContent = `${e.type === "occ" && !e.o.own19 ? `${e.name} is not plotted: BLS has no own 2019 figure for it (†). ` : e.type === "all" ? "" : "Highlighted: " + (e.type === "occ" ? e.name : e.short) + ". "}Dot size shows jobs in 2025. The shaded band is about even with prices (within ±${TOL}%). ${nd} of ${OCC.length} occupations are not plotted: BLS has no own 2019 figure for them (†), so they are never counted. Search for one, or choose “Since May 2021” in the table. Sources: ${SRC_JOBS}; BLS CPI-U annual averages; BLS Employment Projections, 2025–35. Pay is ahead or behind prices only beyond ±${TOL}%.`;
+  $("chart-note").textContent = `${e.type === "occ" && !e.o.own19 ? `${e.name} is not plotted: BLS has no own 2019 figure for it (†). ` : e.type === "all" ? "" : "Highlighted: " + (e.type === "occ" ? e.name : e.short) + ". "}Dot size shows jobs in 2025; red dots are occupations whose median pay is below the national median of ${usd.format(PAY_MEDIAN)}. The shaded band is about even with prices (within ±${TOL}%). ${nd} of ${OCC.length} occupations are not plotted: BLS has no own 2019 figure for them (†), so they are never counted. Search for one, or choose “Since May 2021” in the table. Sources: ${SRC_JOBS}; BLS CPI-U annual averages; BLS Employment Projections, 2025–35. Pay is ahead or behind prices only beyond ±${TOL}%.`;
   secOcc.setTitle(e.type === "all" ? "Every occupation" : `Occupations in ${lcAll(e.type === "occ" ? short(e.o.grp) : e.short)}`);
   secOcc.setSummary(`${list.length} occupations${dagger(list) ? `, ${dagger(list)} with no 2019 figure (†)` : ""}`);
   secTasks.setSummary(tasksFor(list).length ? `${tasksFor(list).length} since ${recent}` : `none since ${recent}`); secTasks.body.innerHTML = tasksHtml(list); const tl = secTasks.body.querySelector(".tasklist"); if (tl) capList(tl.querySelectorAll(".task"), tl);
