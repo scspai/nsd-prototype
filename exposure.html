@@ -55,7 +55,7 @@ function contextLine(e) {
   return `${DOES_NOT} ${scored(e.members).length} of ${e.members.length} occupations here have a score.`;
 }
 function methodNote() {
-  return `<strong>What exposure means.</strong> Exposure is the Language Modeling AIOE score (Felten, Raj &amp; Seamans, 2023), shown as a percentile among occupations. It measures how much what language models can do overlaps with the abilities an occupation needs. It does not mean the jobs will be lost: AI may change, speed up or leave unchanged the same work, and this measure cannot say which. Group figures weight each occupation by its jobs (BLS OEWS, May 2025). <strong>The corner.</strong> The high-exposure, below-median-pay group is every occupation with ${cornerRule}. ${scored(OCC).length} of ${OCC.length} occupations have a score, covering ${COVERAGE.toFixed(1)}% of jobs${NOPAY ? `; ${NOPAY} scored ${NOPAY === 1 ? "occupation has" : "occupations have"} no published 2025 median pay and ${NOPAY === 1 ? "is" : "are"} left out of the group` : ""}.`;
+  return `<strong>What exposure means.</strong> Exposure is the Language Modeling AIOE score (Felten, Raj &amp; Seamans, 2023), shown as a percentile among occupations. It measures how much what language models can do overlaps with the abilities an occupation needs. It does not mean the jobs will be lost: AI may change, speed up or leave unchanged the same work, and this measure cannot say which. Group figures weight each occupation by its jobs (BLS OEWS, May 2025). <strong>The high-exposure, below-median-pay group</strong> is every occupation with ${cornerRule}. ${scored(OCC).length} of ${OCC.length} occupations have a score, covering ${COVERAGE.toFixed(1)}% of jobs${NOPAY ? `; ${NOPAY} scored ${NOPAY === 1 ? "occupation has" : "occupations have"} no published 2025 median pay and ${NOPAY === 1 ? "is" : "are"} left out of the group` : ""}.`;
 }
 
 /* ---------- the rank list: groups by average exposure percentile, weighted by jobs ---------- */
@@ -71,16 +71,16 @@ const ORDER = GROUPS.filter((g) => GST[g.code].w !== null).sort((a, b) => GST[b.
       { n: `${Math.round(GST[hi.code].w)} <span>vs.</span> ${Math.round(GST[lo.code].w)}`, label: `average AI overlap score, ${lcAll(short(hi))} vs. ${lcAll(short(lo))} work`, long: true }],
     note: DOES_NOT });
 }
-const rankRows = () => ORDER.map((g) => { const s = GST[g.code]; return { code: g.code, name: short(g), val: String(Math.round(s.w)), label: `average exposure percentile ${Math.round(s.w)}`, bar: { mode: "lin", v: s.w, max: 100 }, bench: ALL_W, sub: s.cornerJobs ? `${fmtM(s.cornerJobs)} workers in the corner` : "" }; });
+const rankRows = () => ORDER.map((g) => { const s = GST[g.code]; return { code: g.code, name: short(g), val: String(Math.round(s.w)), label: `average exposure percentile ${Math.round(s.w)}`, bar: { mode: "lin", v: s.w, max: 100 }, bench: ALL_W, sub: s.cornerJobs ? `${fmtM(s.cornerJobs)} workers in the high-exposure, below-median-pay group` : "" }; });
 /* The plain-language panel under the selected group: scores, counts and corner workers come from GST, the same rounding as the row. */
 setExplain((code) => {
   const s = GST[code], nm = esc(short(GBY[code])), hi = OCC.filter((o) => o.g === code && o.exp !== null && o.exp >= HIGH).length, sc = s.scored === s.m ? "" : "scored ";
   const count = s.scored === 1 ? `Its one ${sc}occupation ${hi ? "scores" : "does not score"} ${N(HIGH)} or higher.` : hi === 0 ? `None of its ${N(s.scored)} ${sc}occupations score ${N(HIGH)} or higher.` : hi === s.scored ? `All ${N(s.scored)} of its ${sc}occupations score ${N(HIGH)} or higher.` : `${N(hi)} of its ${N(s.scored)} ${sc}occupations ${hi === 1 ? "scores" : "score"} ${N(HIGH)} or higher.`;
   return [`The average worker in ${nm} occupations has an AI overlap score of ${N(Math.round(s.w))} out of ${N(100)}, compared with ${N(Math.round(ALL_W))} for all workers.`, count,
-    ...(s.cornerJobs ? [`${N(fmtM(s.cornerJobs))} workers are in its high-overlap, below-median-pay occupations.`] : []),
+    ...(s.cornerJobs ? [`${N(fmtM(s.cornerJobs))} workers are in its high-exposure, below-median-pay occupations.`] : []),
     `Overlap means AI’s abilities match much of this work. It does not mean jobs will be lost.`];
 });
-$("rank-note").textContent = `Average exposure percentile of each group’s workers (0 to 100), weighted by jobs. The dark tick marks all occupations, ${Math.round(ALL_W)}. The line under each group is the workers in the high-exposure, below-median-pay corner. Exposure is overlap with the work, not job loss. Source: ${SRC_EXPOSURE}.`;
+$("rank-note").textContent = `Average exposure percentile of each group’s workers (0 to 100), weighted by jobs. The dark tick marks all occupations, ${Math.round(ALL_W)}. The line under each group is its workers in the high-exposure, below-median-pay group. Exposure is overlap with the work, not job loss. Source: ${SRC_EXPOSURE}.`;
 
 /* ---------- the chart: exposure (x) against median pay (y, log scale), every occupation with a score ---------- */
 function drawExposure(Wd) {
@@ -102,7 +102,9 @@ function drawExposure(Wd) {
   svgEl("line", { x1: L, x2: Wd - R, y1: Yv(MEDIAN), y2: Yv(MEDIAN), stroke: css("--brand"), "stroke-width": 1, "stroke-dasharray": "4 3" }, s);
   if (narrow) txt(s, L + 6, Yv(MEDIAN) - 6, `Median ${usd.format(MEDIAN)}`, { class: "lab2", style: `paint-order:stroke;stroke:${css("--surface")};stroke-width:4px` });
   else { txt(s, Wd - R + 10, Yv(MEDIAN) - 4, "National median", { class: "lab2" }); txt(s, Wd - R + 10, Yv(MEDIAN) + 12, usd.format(MEDIAN), { class: "lab2" }); }
-  txt(s, X(100) - 6, Yv(wLo) - 8, narrow ? "Corner" : "High exposure, below-median pay", { class: "lab", "text-anchor": "end", style: `paint-order:stroke;stroke:${css("--surface")};stroke-width:4px;fill:${css("--brand-ink")}` });
+  { const st = { class: "lab", "text-anchor": "end", style: `paint-order:stroke;stroke:${css("--surface")};stroke-width:4px;fill:${css("--brand-ink")}` };
+    if (narrow) { txt(s, X(100) - 6, Yv(wLo) - 26, "High exposure,", st); txt(s, X(100) - 6, Yv(wLo) - 8, "below-median pay", st); }
+    else txt(s, X(100) - 6, Yv(wLo) - 8, "High exposure, below-median pay", st); }
   const rad = (o) => Math.max(2.5, Math.sqrt(o.emp[3] / 4000) * (narrow ? 0.8 : 1)), mark = css("--mark"), dot = css("--dot"), surf = css("--surface");
   pts.slice().sort((a, b) => (inSel(e, a) - inSel(e, b)) || b.emp[3] - a.emp[3]).forEach((o) => {
     const on = inSel(e, o), c = svgEl("circle", { cx: X(o.exp), cy: Yv(o.w[3]), r: rad(o), fill: on ? mark : dot, "fill-opacity": on ? (e.type === "all" ? 0.55 : 0.85) : 0.55, stroke: on ? surf : "none", "stroke-width": 1.2, "data-soc": o.soc }, s);
@@ -133,11 +135,11 @@ const exCols = [
   { k: "exp", label: "Exposure percentile", num: true, val: (o) => o.exp, html: (o) => (o.exp === null ? "—" : Math.round(o.exp)) },
   { k: "wage", label: "Median pay, 2025", num: true, val: (o) => o.w[3], html: (o) => (o.w[3] ? usd.format(o.w[3]) : "—") },
   { k: "emp", label: "Jobs, 2025", num: true, val: (o) => o.emp[3], html: (o) => fmt.format(o.emp[3]) },
-  { k: "corner", label: "In the corner", num: true, val: (o) => (inCorner(o) ? 1 : 0), html: (o) => (inCorner(o) ? '<span class="behind" style="color:var(--brand-ink)">Yes</span>' : "—") }];
+  { k: "corner", label: "High-exposure, below-median-pay group", num: true, val: (o) => (inCorner(o) ? 1 : 0), html: (o) => (inCorner(o) ? '<span class="behind" style="color:var(--brand-ink)">Yes</span>' : "—") }];
 tablePaint = dataTable($("occ-tbl"), { label: "Occupations and their exposure", sort: "exp", rows: () => tableList, cols: exCols,
-  note: () => srcLine(`${SRC_EXPOSURE}. Exposure is the percentile of the Language Modeling AIOE score; it is overlap with the work, not job loss. In the corner means ${cornerRule}. — means no score or no published pay.`) });
+  note: () => srcLine(`${SRC_EXPOSURE}. Exposure is the percentile of the Language Modeling AIOE score; it is overlap with the work, not job loss. The high-exposure, below-median-pay group is every occupation with ${cornerRule}. — means no score or no published pay.`) });
 $("occ-tbl").addEventListener("click", (ev) => { if (ev.target.closest("[data-pick]")) window.scrollTo({ top: 0, behavior: "smooth" }); });
-secCorner.body.innerHTML = `<p>The high-exposure, below-median-pay group is every occupation with ${cornerRule}. It has ${CORNER.length} occupations and ${fmtM(jobsOf(CORNER))} workers.</p><div class="bars" id="corner-bars" role="group" aria-label="Workers in the corner, by group"></div><div id="corner-tbl"></div>`;
+secCorner.body.innerHTML = `<p>The high-exposure, below-median-pay group is every occupation with ${cornerRule}. It has ${CORNER.length} occupations and ${fmtM(jobsOf(CORNER))} workers.</p><div class="bars" id="corner-bars" role="group" aria-label="Workers in the high-exposure, below-median-pay group, by occupation group"></div><div id="corner-tbl"></div>`;
 secCorner.setSummary(`${CORNER.length} occupations, ${fmtM(jobsOf(CORNER))} workers`);
 const cornerRows = GROUPS.filter((g) => GST[g.code].cornerJobs > 0).sort((a, b) => GST[b.code].cornerJobs - GST[a.code].cornerJobs), cmax = GST[cornerRows[0].code].cornerJobs;
 function paintCorner(e) {
@@ -145,9 +147,9 @@ function paintCorner(e) {
   $("corner-bars").innerHTML = cornerRows.map((g) => `<div class="bar${g.code === parent ? " bar--sel" : ""}"${tipData(short(g), `${fmtM(GST[g.code].cornerJobs)} workers in ${GST[g.code].corner.length} occupations`, "Sources: " + SRC_EXPOSURE)}><span>${esc(short(g))}</span><div class="bar__track"><div class="bar__fill" style="width:${GST[g.code].cornerJobs / cmax * 100}%"></div></div><span class="bar__v">${fmtM(GST[g.code].cornerJobs).replace(" million", "M")}</span></div>`).join("");
   capList($("corner-bars").querySelectorAll(".bar"), $("corner-bars"));
 }
-cornerPaint = dataTable($("corner-tbl"), { label: "Occupations in the corner", sort: "emp", rows: () => CORNER, cols: exCols.filter((c) => c.k !== "corner"),
+cornerPaint = dataTable($("corner-tbl"), { label: "Occupations in the high-exposure, below-median-pay group", sort: "emp", rows: () => CORNER, cols: exCols.filter((c) => c.k !== "corner"),
   note: () => srcLine(`${SRC_EXPOSURE}. Only occupations with a score and a published 2025 median pay are counted.`) });
-cornerPaint(); kbChart($("corner-bars"), "Workers in the corner, by group");
+cornerPaint(); kbChart($("corner-bars"), "Workers in the high-exposure, below-median-pay group, by occupation group");
 /* ---------- coming with new data: where workers go next (linked CPS) and the draft definition of "trapped". Invented, to show the layout. ---------- */
 const SAMPLE_NEXT = [["Same occupation", 58], ["Related occupation, similar or higher pay", 14], ["Different occupation, lower pay", 11], ["Unemployed", 7], ["Out of the labor force", 10]];
 const coming = addComing("Where workers go next, from linked Current Population Survey records");
@@ -172,7 +174,7 @@ function render(e) {
   $("headline").innerHTML = leadSentence(e); $("subline").innerHTML = subLine(e); $("context").innerHTML = contextLine(e); $("method").innerHTML = methodNote();
   renderRank(rankRows(), e); readout(e);
   const list = listOf(e), plotted = OCC.filter((o) => o.exp !== null && o.w[3] !== null).length;
-  $("chart-note").textContent = `${e.type === "all" ? "" : "Highlighted: " + (e.type === "occ" ? e.name : e.short) + ". "}Each dot is an occupation; size shows jobs in 2025. The shaded corner is the high-exposure, below-median-pay group. ${plotted} of ${OCC.length} occupations are plotted; the rest have no score or no published pay. Exposure is overlap with the work, not job loss. Sources: ${SRC_EXPOSURE}.`;
+  $("chart-note").textContent = `${e.type === "all" ? "" : "Highlighted: " + (e.type === "occ" ? e.name : e.short) + ". "}Each dot is an occupation; size shows jobs in 2025. The shaded area is the high-exposure, below-median-pay group. ${plotted} of ${OCC.length} occupations are plotted; the rest have no score or no published pay. Exposure is overlap with the work, not job loss. Sources: ${SRC_EXPOSURE}.`;
   secOcc.setTitle(e.type === "all" ? "Every occupation" : `Occupations in ${lcAll(e.type === "occ" ? short(e.o.grp) : e.short)}`);
   secOcc.setSummary(`${list.length} occupations, ${scored(list).length} with a score`);
   tableList = list; tablePaint(); paintCorner(e); cornerPaint(); redraw();
