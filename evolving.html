@@ -88,7 +88,11 @@ $("rank-note").textContent = `Jobs since May 2019 in each of the 22 groups of oc
 /* ---------- the chart: projected jobs (x) against pay after inflation (y), every occupation with comparable 2019 data ---------- */
 /* Red dots: occupations whose 2025 median pay is below the national median, the same line the Exposure page uses. */
 const PAY_MEDIAN = W.total.wage[3];
-$("chart").insertAdjacentHTML("beforebegin", `<div class="swatches" id="pay-key" style="margin:4px 0 6px"><span><i style="--c:var(--brand)"></i>Median pay below the national median (${usd.format(PAY_MEDIAN)}, 2025)</span><span><i style="--c:var(--mark)"></i>At or above it</span></div>`);
+{ /* the color key sits top right, on the same line as the chart's title; on narrow screens it wraps under it */
+  const ey = $("plate").querySelector(".eyebrow"), row = document.createElement("div");
+  row.style.cssText = "display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px 24px";
+  ey.before(row); row.append(ey);
+  row.insertAdjacentHTML("beforeend", `<div class="swatches" id="pay-key" style="font-size:13px"><span><i style="--c:var(--brand)"></i>Below median pay</span><span><i style="--c:var(--mark)"></i>At or above median pay</span></div>`); }
 function drawScatter(Wd) {
   if (!current) return;
   const e = current, box = $("chart"); box.innerHTML = "";
@@ -118,7 +122,7 @@ function drawScatter(Wd) {
   const lowPay = (o) => o.w[3] !== null && o.w[3] < PAY_MEDIAN;
   const order = pts.slice().sort((a, b) => (inSel(e, a) - inSel(e, b)) || b.emp[3] - a.emp[3]);
   order.forEach((o) => {
-    const on = inSel(e, o), c = svgEl("circle", { cx: X(o.pr), cy: Yv(o.r19), r: rad(o), fill: on ? (lowPay(o) ? red : mark) : dot, "fill-opacity": on ? (e.type === "all" ? 0.55 : 0.85) : 0.55, stroke: on ? surf : "none", "stroke-width": 1.2, "data-soc": o.soc }, s);
+    const on = inSel(e, o), c = svgEl("circle", { cx: X(o.pr), cy: Yv(o.r19), r: rad(o), fill: on ? (lowPay(o) ? red : mark) : dot, "fill-opacity": on ? (lowPay(o) ? 0.9 : (e.type === "all" ? 0.55 : 0.85)) : 0.55, stroke: on ? surf : "none", "stroke-width": 1.2, "data-soc": o.soc }, s);
     setTip(c, `${o.t} (${o.soc})`, `Pay ${pct(o.r19)} after inflation since 2019, ${band(o.r19) === "even" ? "about even with prices" : band(o.r19) === "ahead" ? "ahead of prices" : "behind prices"} · jobs ${pct(o.pr)} projected to 2035 · ${fmt.format(o.emp[3])} jobs in 2025${o.w[3] !== null ? ` · median pay ${usd.format(o.w[3])}, ${lowPay(o) ? "below" : "at or above"} the national median` : ""}${out.includes(o) ? " (beyond the plotted range, drawn at the edge)" : ""}`, "Sources: BLS OEWS 2019 (MB3) and 2025; BLS CPI-U; BLS Employment Projections 2025–35");
     c.addEventListener("click", () => setSel({ type: "occ", id: o.soc }));
   });
