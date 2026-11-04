@@ -203,7 +203,7 @@ function mountShell(cfg) {
       <div><p class="eyebrow">Groups of occupations</p><h2 class="rank-h">${esc(cfg.rankTitle)}</h2><div class="rank" id="rank" role="group" aria-label="${esc(cfg.rankLabel)}"></div><p class="note" id="rank-note" style="margin-top:10px"></p></div>
     </aside>
     <div class="main">
-      <figure class="plate" id="plate"><p class="eyebrow">${esc(ey.chart || "")}</p><div class="chart" id="chart"></div><p class="note"><span id="chart-note"></span><span id="clip-note"></span></p></figure>
+      <figure class="plate" id="plate"><p class="eyebrow">${esc(ey.chart || "")}</p><div class="chart" id="chart"></div><p class="note" id="chart-notes"><span id="chart-note"></span><span id="clip-note"></span></p></figure>
       <p class="method" id="method" style="margin:0"></p>
       <div class="readout" id="readout" aria-live="polite"></div>
       <section aria-label="Detail" id="details"></section>

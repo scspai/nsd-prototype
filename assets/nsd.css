@@ -360,3 +360,6 @@ html { scroll-padding-top: 96px; }
 
 /* The two description lines under each page headline are hidden to cut text; remove this rule to bring them back. */
 #subline, #context { display: none; }
+
+/* The caption under each main chart is hidden to cut text; remove this rule to bring it back. */
+#chart-notes { display: none; }
