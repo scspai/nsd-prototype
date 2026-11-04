@@ -54,8 +54,9 @@ function contextLine(e) {
   return `${DOES_NOT} ${scored(e.members).length} of ${e.members.length} occupations here have a score.`;
 }
 function methodNote() {
-  return `<strong>What exposure means.</strong> Exposure is the Language Modeling AIOE score (Felten, Raj &amp; Seamans, 2023), shown as a percentile among occupations. It measures how much what language models can do overlaps with the abilities an occupation needs. It does not mean the jobs will be lost: AI may change, speed up or leave unchanged the same work, and this measure cannot say which. Group figures weight each occupation by its jobs (BLS OEWS, May 2025). <strong>The high-exposure, below-median-pay group</strong> is every occupation with ${cornerRule}. ${scored(OCC).length} of ${OCC.length} occupations have a score, covering ${COVERAGE.toFixed(1)}% of jobs${NOPAY ? `; ${NOPAY} scored ${NOPAY === 1 ? "occupation has" : "occupations have"} no published 2025 median pay and ${NOPAY === 1 ? "is" : "are"} left out of the group` : ""}.`;
+  return `<strong>What exposure means.</strong> A research score (Felten, Raj &amp; Seamans, 2023) of how much AI overlaps with the abilities a job needs, shown as a percentile. It shows overlap, not job loss. High-exposure, below-median pay means a percentile of ${HIGH}+ and 2025 pay under ${usd.format(MEDIAN)}. ${scored(OCC).length} of ${OCC.length} occupations have a score.`;
 }
+
 
 /* ---------- the rank list: groups by average exposure percentile, weighted by jobs ---------- */
 const ORDER = GROUPS.filter((g) => GST[g.code].w !== null).sort((a, b) => GST[b.code].w - GST[a.code].w);

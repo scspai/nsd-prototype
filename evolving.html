@@ -53,11 +53,9 @@ function payLine(e) {
   return `After inflation, pay is <span class="behind">behind prices by more than ${TOL}%</span> in ${behind} of the ${n} occupations with comparable 2019 data, and <span class="ahead">ahead by more than ${TOL}%</span> in ${ahead}.`;
 }
 function methodNote(e) {
-  const set = listOf(e), list = comparable(set), n = list.length;
-  const at = (t) => list.filter((o) => (t === 0 ? o.r19 < 0 : o.r19 < -t)).length, gap = W.mb3_vs_published_2019 && W.mb3_vs_published_2019.wage_median_abs_pct;
-  const where = e.type === "all" ? "" : ` in ${esc(lcAll(e.type === "occ" ? short(e.o.grp) : e.short))}`;
-  return `<strong>Method.</strong> BLS: “The Bureau of Labor Statistics does not encourage the use of OEWS data for time-series analysis.” With the May 2021 estimates BLS switched OEWS to a new estimation method (MB3), which “will also affect the comparability of estimates produced before and after the change.” May 2019 here is BLS’s MB3 research estimate, so all four years use one method. Changes shown are estimates. Because the published and MB3 2019 median wages differ by about ${gap}%, pay after inflation counts as ahead or behind only beyond ±${TOL}%. Among the ${n} occupations${where} with comparable 2019 data, ${at(0)} are behind prices at a strict zero, ${at(2)} at ±2% and ${at(3)} at ±3%.`;
+  return `<strong>Method.</strong> Jobs and pay from BLS (May 2019–2025), adjusted for inflation with CPI-U. BLS cautions against comparing its wage survey across years, so changes are estimates and pay counts as ahead or behind prices only beyond ±${TOL}%. Job projections are BLS’s for 2025–35.`;
 }
+
 
 /* ---------- the rank list: all 22 groups by job change since 2019 ---------- */
 const ORDER = GROUPS.slice().sort((a, b) => b.j19 - a.j19), HALF = Math.ceil(Math.max(...GROUPS.map((g) => Math.abs(g.j19))) / 5) * 5;
