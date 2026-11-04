@@ -357,3 +357,6 @@ html { scroll-padding-top: 96px; }
 .alt-btn:hover { color: var(--ink); }
 .alt-btn[aria-expanded="true"] { color: var(--brand-ink); }
 .alt-line { font-size: 13px; line-height: 1.4; color: var(--ink-2); margin: 4px 0 0; max-width: 46ch; }
+
+/* The two description lines under each page headline are hidden to cut text; remove this rule to bring them back. */
+#subline, #context { display: none; }
