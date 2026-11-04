@@ -252,7 +252,7 @@ function addComing(summary) {
 function mountHero(o) {
   document.querySelector(".layout").insertAdjacentHTML("beforebegin", `<section class="hero" aria-labelledby="hero-h"><div class="hero__in">
     <h2 class="hero__h" id="hero-h">${o.h}</h2>
-    <p class="hero__sub">${o.sub}</p>
+    ${o.sub ? `<p class="hero__sub">${o.sub}</p>` : ""}
     <dl class="hero__tiles">${o.tiles.map((t) => `<div class="hero__tile${t.red ? " hero__tile--red" : ""}${t.long ? " hero__tile--long" : ""}${typeof t.long === "string" ? " hero__tile--" + t.long : ""}"><dt>${t.label}</dt><dd>${t.n}</dd></div>`).join("\n      ")}</dl>${o.note ? `<p class="hero__note">${o.note}</p>` : ""}</div></section>`);
 }
 const srcLine = (s) => `<p class="note">Source: ${s}</p>`;
