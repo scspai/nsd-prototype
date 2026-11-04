@@ -68,7 +68,7 @@ const ORDER = GROUPS.filter((g) => GST[g.code].w !== null).sort((a, b) => GST[b.
     tiles: [{ n: (jobsOf(CORNER) / 1e6).toFixed(1) + "M", label: "workers in high-AI-overlap, below-median-pay occupations", red: true },
       { n: `${CORNER.length}`, label: `occupations in that group; ${lcAll(short(topC))} accounts for ${topShare}% of its workers` },
       { n: `${Math.round(GST[hi.code].w)} <span>vs.</span> ${Math.round(GST[lo.code].w)}`, label: `average AI overlap score, ${lcAll(short(hi))} vs. ${lcAll(short(lo))} work`, long: true }],
-    note: DOES_NOT });
+  });
 }
 const rankRows = () => ORDER.map((g) => { const s = GST[g.code]; return { code: g.code, name: short(g), val: String(Math.round(s.w)), label: `average exposure percentile ${Math.round(s.w)}`, bar: { mode: "lin", v: s.w, max: 100 }, bench: ALL_W, sub: s.cornerJobs ? `${fmtM(s.cornerJobs)} workers in the high-exposure, below-median-pay group` : "" }; });
 /* The plain-language panel under the selected group: scores, counts and corner workers come from GST, the same rounding as the row. */
@@ -161,7 +161,8 @@ kbChart($("next-bars"), "Sample: where workers go next");
 /* ---------- readout and render ---------- */
 function readout(e) {
   const box = $("readout");
-  if (e.type !== "occ") { box.innerHTML = `<p class="note">Select a dot, or move to it with the arrow keys and press Enter, to see that occupation’s exposure and pay. Or search for any occupation.</p>`; return; }
+  if (e.type !== "occ") { box.innerHTML = ""; box.hidden = true; return; }
+  box.hidden = false;
   const o = e.o, tools = o.dev.concat(o.aug);
   box.innerHTML = `${cardX(o.t)}<div class="readout__h"><b>${esc(o.t)}</b><span class="soc">${o.soc} · ${esc(short(o.grp))}</span></div>
     <dl class="kv"><div><dt>Exposure percentile</dt><dd>${o.exp === null ? "no score" : Math.round(o.exp)}</dd></div><div><dt>Median pay, 2025</dt><dd>${o.w[3] ? usd.format(o.w[3]) : "—"}</dd></div><div><dt>Jobs, 2025</dt><dd>${fmt.format(o.emp[3])}</dd></div>

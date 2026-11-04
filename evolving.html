@@ -140,7 +140,8 @@ function drawScatter(Wd) {
 }
 function readout(e) {
   const box = $("readout");
-  if (e.type !== "occ") { box.innerHTML = `<p class="note">Select a dot, or move to it with the arrow keys and press Enter, to see that occupation’s jobs, pay and tools. Or search for any occupation.</p>`; return; }
+  if (e.type !== "occ") { box.innerHTML = ""; box.hidden = true; return; }
+  box.hidden = false;
   const o = e.o, b21 = !o.own19, j = b21 ? o.j21 : o.j19, r = b21 ? o.r21 : o.r19, since = b21 ? "2021" : "2019", tools = o.dev.concat(o.aug);
   box.innerHTML = `${cardX(o.t)}<div class="readout__h"><b>${esc(o.t)}</b><span class="soc">${o.soc} · ${esc(short(o.grp))}${b21 ? " · † no 2019 figure" : ""}</span></div>
     <dl class="kv"><div><dt>Jobs, 2025</dt><dd>${fmt.format(o.emp[3])}</dd></div>
