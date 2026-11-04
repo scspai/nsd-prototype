@@ -48,7 +48,6 @@ const ALL_TOUCHED = touched(OCC);
 {
   const nAll = TASKS.length, nRecent = TASKS.filter(isRecent).length, nAI = aiMentions(TASKS);
   mountHero({ h: "AI is changing work faster than we can measure it.",
-    sub: `The government has recorded ${fmt.format(nRecent)} new job tasks since ${RECENT}, across ${fmt.format(ALL_TOUCHED)} occupations.`,
     tiles: [{ n: fmt.format(nAll), label: "new tasks on record", red: true }, { n: fmt.format(nRecent), label: `new tasks recorded since ${RECENT}` },
       { n: `${fmt.format(ALL_TOUCHED)} <span>of ${fmt.format(OCC.length)}</span>`, label: `occupations with new work since ${RECENT}` }] });
 }
