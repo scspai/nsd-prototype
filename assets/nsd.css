@@ -368,17 +368,22 @@ html { scroll-padding-top: 96px; }
 
 /* ---------- Methodology page: set as one technical note rather than a dashboard. A single sheet; chapters numbered in the margin,
    notes in a side column, and one figure per idea, each a different form because each explains a different thing. Tokens only. ---------- */
-.mt { max-width: 1280px; margin: 0 auto; padding: 28px 24px 96px; }
-.mt-doc { background: var(--surface); border-radius: var(--radius-card); padding: 0 56px 56px; }
+/* the page is one white surface from edge to edge, with content aligned to the header */
+body:has(> .mt) { background: var(--surface); }
+.mt { max-width: 1280px; margin: 0 auto; padding: 0 24px 96px; }
+.mt-doc { background: var(--surface); }
 .mt-doc a { text-decoration-color: var(--brand); text-underline-offset: 3px; }
 /* the shared grid: margin number, reading column, side notes */
 .mt-head, .mt-ch { display: grid; grid-template-columns: 72px minmax(0, 1fr) 272px; column-gap: 48px; }
 .mt-ch, .mt-refs { scroll-margin-top: 84px; }
 
 /* title block */
-.mt-head { padding: 52px 0 48px; align-items: start; border-bottom: 2px solid var(--ink); }
-.mt-head__title { padding-top: 8px; }
-.mt-head__title { grid-column: 1 / 3; max-width: 760px; }
+.mt-head { padding: 52px 0 48px; align-items: start; border-bottom: 2px solid var(--ink); grid-template-columns: minmax(0, 1fr) 330px; column-gap: 64px; }
+.mt-head__title { padding-top: 8px; grid-column: 1 !important; }
+.mt-toc { grid-column: 2; }
+/* headings balanced; body copy keeps its last two words together (see the typesetting step in methodology.html) */
+.mt h1, .mt h2, .mt h3, .mt-fig__t { text-wrap: balance; }
+.mt-head__title { max-width: 760px; }
 .mt-head h1 { font-family: var(--font-display); font-weight: 700; font-size: clamp(34px, 3.6vw, 48px); line-height: 1.04; letter-spacing: -0.025em; color: var(--title); margin: 8px 0 18px; }
 .mt-stand { font-size: 20px; line-height: 1.5; font-weight: 300; color: var(--ink-2); max-width: 60ch; }
 .mt-toc ol { list-style: none; margin: 0; padding: 0; counter-reset: toc; }
@@ -516,8 +521,8 @@ html { scroll-padding-top: 96px; }
 
 /* ---- smaller screens ---- */
 @media (max-width: 1100px) {
-  .mt-doc { padding: 0 36px 44px; }
-  .mt-head, .mt-ch { grid-template-columns: 56px minmax(0, 1fr) 232px; column-gap: 32px; }
+  .mt-ch { grid-template-columns: 56px minmax(0, 1fr) 232px; column-gap: 32px; }
+  .mt-head { grid-template-columns: minmax(0, 1fr) 300px; column-gap: 40px; }
   .mt-ch__n { font-size: 48px; }
   .mt-cov { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 40px; }
   .mt-steps--row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -525,6 +530,7 @@ html { scroll-padding-top: 96px; }
 @media (max-width: 900px) {
   .mt-head, .mt-ch { grid-template-columns: minmax(0, 1fr); }
   .mt-head { padding: 40px 0 32px; row-gap: 28px; }
+  .mt-toc { grid-column: 1; }
   .mt-head__title, .mt-ch__n, .mt-ch__text, .mt-ch__aside, .mt-fig, .mt-fig--full, .mt-case, .mt-read { grid-column: 1; grid-row: auto; }
   .mt-ch { padding-top: 40px; row-gap: 20px; }
   .mt-ch__n { font-size: 40px; width: 64px; padding-top: 10px; }
@@ -541,8 +547,7 @@ html { scroll-padding-top: 96px; }
   .mt-refs ol { columns: 1; }
 }
 @media (max-width: 600px) {
-  .mt { padding: 12px 10px 64px; }
-  .mt-doc { padding: 0 16px 32px; }
+  .mt { padding: 0 24px 64px; }
   .mt-stand { font-size: 18px; }
   .mt-ch__text p { font-size: 17px; }
   .mt-ch__text h2 { font-size: 26px; }
@@ -553,7 +558,6 @@ html { scroll-padding-top: 96px; }
   .mt-steps--row li:first-child { border-top: 2px solid var(--mark); }
   .mt-steps--row li::before { top: 10px !important; }
   .mt-cap { grid-template-columns: minmax(0, 1fr); gap: 2px; }
-  .mt-drill__h { flex-direction: column; gap: 0; }
   .mt-sum__t tr:not(.mt-sum__res) td:nth-child(2) { display: none; }
   .mt-sum__t th { width: 62%; }
   .mt-sum__f { display: block; font-family: var(--font-mono); font-weight: 400; font-size: 13px; color: var(--muted); margin-top: 2px; }
