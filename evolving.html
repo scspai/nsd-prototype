@@ -156,7 +156,7 @@ function readout(e) {
 
 /* ---------- sections: closed, each ending in one plain source line ---------- */
 const DW = W.displaced_workers;
-const secOcc = addSection("Every occupation", ""), secDw = addSection("Displaced workers, January 2026", `${DW.long_tenured_displaced_millions} million workers (BLS)`), secTasks = addSection("New tasks recorded", "");
+const secOcc = addSection("Every occupation", ""), secDw = addSection("Displaced workers, January 2026", `${DW.long_tenured_displaced_millions} million workers (BLS)`);
 /* ---------- displaced workers: BLS Displaced Worker Survey, national and five broad categories; does not change with the selection ---------- */
 secDw.body.innerHTML = (() => {
   const st = DW.status_at_survey_pct, ft = DW.full_time_reemployed_earning_as_much_or_more_pct, ks = Object.keys(ft).sort(), now = ft[ks[1]], before = ft[ks[0]];
@@ -189,15 +189,6 @@ tablePaint = dataTable($("occ-tbl"), {
 });
 secOcc.body.querySelector(".seg").addEventListener("click", (ev) => { const b = ev.target.closest("[data-base]"); if (!b) return; base = b.dataset.base; secOcc.body.querySelectorAll("[data-base]").forEach((x) => x.setAttribute("aria-pressed", x === b)); tablePaint(); });
 $("occ-tbl").addEventListener("click", (ev) => { if (ev.target.closest("[data-pick]")) window.scrollTo({ top: 0, behavior: "smooth" }); });
-/* O*NET codes that BLS publishes only inside a combined occupation (same mapping as the Emerging page). */
-const TO_BLS = { "21-1014": "21-1018", "29-2011": "29-2010", "29-2012": "29-2010", "31-1121": "31-1120", "31-1122": "31-1120" };
-const recent = W.settings.recent_tasks_from, tasksFor = (list) => { const codes = new Set(list.map((o) => o.soc)); const all = list.length === OCC.length; return W.emerging_tasks.filter((t) => +t[4].slice(0, 4) >= recent && (all || codes.has(TO_BLS[t[0]] || t[0]))); };
-function tasksHtml(list) {
-  const tasks = tasksFor(list);
-  return (tasks.length ? `<div class="tasklist" tabindex="0" role="region" aria-label="New tasks list">${tasks.map((t) => `<div class="task"><div class="task__d">${t[4]}</div><div>${esc(t[3])}<div class="task__o">${esc(t[1])}</div></div></div>`).join("")}</div>`
-    : `<p>O*NET has recorded no new tasks for these occupations since ${recent}. That can mean they have not been re-surveyed yet, not that nothing changed.</p>`) + srcLine("O*NET 31.0 Emerging Tasks. O*NET re-surveys each occupation every few years.");
-}
-
 /* ---------- coming with new data: invented lines, drawn only to show the layout; they need NLx postings ---------- */
 const SAMPLE_SKILLS = {
   software: [["Generative AI / LLM tools", [2, 3, 5, 9, 16, 24, 31]], ["Cloud platforms", [28, 30, 33, 35, 36, 37, 37]], ["Manual QA testing", [14, 13, 12, 10, 9, 7, 6]]],
@@ -235,7 +226,6 @@ function render(e) {
   $("chart-note").textContent = `${e.type === "occ" && !e.o.own19 ? `${e.name} is not plotted: BLS has no own 2019 figure for it (†). ` : e.type === "all" ? "" : "Highlighted: " + (e.type === "occ" ? e.name : e.short) + ". "}Dot size shows jobs in 2025; red dots are occupations whose median pay is below the national median of ${usd.format(PAY_MEDIAN)}. The shaded band is about even with prices (within ±${TOL}%). ${nd} of ${OCC.length} occupations are not plotted: BLS has no own 2019 figure for them (†), so they are never counted. Search for one, or choose “Since May 2021” in the table. Sources: ${SRC_JOBS}; BLS CPI-U annual averages; BLS Employment Projections, 2025–35. Pay is ahead or behind prices only beyond ±${TOL}%.`;
   secOcc.setTitle(e.type === "all" ? "Every occupation" : `Occupations in ${lcAll(e.type === "occ" ? short(e.o.grp) : e.short)}`);
   secOcc.setSummary(`${list.length} occupations${dagger(list) ? `, ${dagger(list)} with no 2019 figure (†)` : ""}`);
-  secTasks.setSummary(tasksFor(list).length ? `${tasksFor(list).length} since ${recent}` : `none since ${recent}`); secTasks.body.innerHTML = tasksHtml(list); const tl = secTasks.body.querySelector(".tasklist"); if (tl) capList(tl.querySelectorAll(".task"), tl);
   if (e.type === "occ" && !e.o.own19) { base = "21"; secOcc.body.querySelectorAll("[data-base]").forEach((x) => x.setAttribute("aria-pressed", x.dataset.base === base)); }
   tableList = list; tablePaint();
   $("sd-key").innerHTML = e.type === "featured" ? SAMPLE_SKILLS[e.id].map(([n], j) => `<span style="display:inline-flex;align-items:center;gap:8px;margin-right:18px;font-size:14px"><svg width="30" height="4" viewBox="0 0 30 4" aria-hidden="true" style="--f:var(--mark)"><line class="sd-line sd-s${j + 1}" x1="0" y1="2" x2="30" y2="2"/></svg>${esc(n)}</span>`).join("") : "";
