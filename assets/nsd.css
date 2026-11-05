@@ -668,3 +668,17 @@ body:has(> main.layout) { background: var(--page-tint); }
 :root[data-theme="dark"] .layout .search input:focus { box-shadow: 0 0 0 3px rgba(127, 176, 222, 0.22); }
 .layout .search ul { border-radius: 10px; margin-top: 6px; padding: 6px; }
 .layout .search li { border-radius: 6px; }
+
+/* Selected group: the row and its plain-language explanation read as one white card with a hairline border and soft
+   corners, instead of a navy bar on the row and a red bar on the text. Figures in navy mono; the last sentence (the
+   caveat or how to read the bar) sits under a hairline as a quieter footnote. */
+.layout .rk[aria-expanded="true"] { background: var(--surface); border-left-color: transparent; border-radius: 10px 10px 0 0; box-shadow: 0 0 0 1px var(--line); position: relative; z-index: 1; }
+.layout .rk[aria-expanded="true"]:not([aria-controls]) { border-radius: 10px; }
+.layout .rk[aria-expanded="true"] .rk__name { color: var(--title); }
+.layout .rk[aria-expanded="true"]:hover { background: var(--surface); }
+.layout .rk-panel { margin: 0 0 14px; padding: 16px 18px 18px 14px; background: var(--surface); border-left: 0; border-radius: 0 0 10px 10px; box-shadow: 0 0 0 1px var(--line), 0 6px 18px rgba(0, 30, 50, 0.05); gap: 10px; font-size: 15px; font-weight: 400; line-height: 1.6; color: var(--ink-2); }
+.layout .rk-panel .n { color: var(--title); font-weight: 600; }
+.layout .rk-panel p:last-child:not(:first-child) { margin-top: 2px; padding-top: 12px; border-top: 1px solid var(--line); font-size: 14px; line-height: 1.55; color: var(--muted); }
+.layout .rk-panel p:last-child:not(:first-child) .n { color: var(--ink-2); }
+.layout .rk[aria-expanded="true"] { margin-top: 8px; }
+.layout .rk-panel p { text-wrap: pretty; }
