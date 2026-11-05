@@ -360,6 +360,8 @@ html { scroll-padding-top: 96px; }
 
 /* The two description lines under each page headline are hidden to cut text; remove this rule to bring them back. */
 #subline, #context { display: none; }
+/* The page headline in the rail is hidden on screen to cut text. It stays in the page for screen readers (the page's h1) and as the focus target when an occupation card closes; remove this rule to bring it back. */
+#headline { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 
 /* The caption under each main chart is hidden to cut text; remove this rule to bring it back. */
 #chart-notes { display: none; }
