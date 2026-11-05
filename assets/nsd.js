@@ -252,8 +252,11 @@ function addComing(summary) {
   $("coming").appendChild(d); return { el: d, body: d.querySelector(".body") };
 }
 /* The opening section above the two columns: { h, sub, tiles: [{ n, label, red, long }], note }. Text arrives already escaped; numbers are computed by the page. */
+/* The small line above each page title: the product, then the page the reader is on. */
+const heroKicker = () => { const cur = document.querySelector(".mast__nav [aria-current=\"page\"]"); return `<p class="hero__kicker">National Skills Dashboard${cur ? `<span aria-hidden="true"></span>${esc(cur.textContent)}` : ""}</p>`; };
 function mountHero(o) {
   document.querySelector(".layout").insertAdjacentHTML("beforebegin", `<section class="hero" aria-labelledby="hero-h"><div class="hero__in">
+    ${heroKicker()}
     <h2 class="hero__h" id="hero-h">${o.h}</h2>
     ${o.sub ? `<p class="hero__sub">${o.sub}</p>` : ""}
     <dl class="hero__tiles">${o.tiles.map((t) => `<div class="hero__tile${t.red ? " hero__tile--red" : ""}${t.long ? " hero__tile--long" : ""}${typeof t.long === "string" ? " hero__tile--" + t.long : ""}"><dt>${t.label}</dt><dd>${t.n}</dd></div>`).join("\n      ")}</dl>${o.note ? `<p class="hero__note">${o.note}</p>` : ""}</div></section>`);
