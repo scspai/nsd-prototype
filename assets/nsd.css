@@ -678,10 +678,5 @@ body:has(> main.layout) { background: var(--page-tint); }
 .layout .rk[aria-expanded="true"]:hover { background: var(--surface); }
 .layout .rk-panel { margin: 0 0 14px; padding: 16px 18px 18px 14px; background: var(--surface); border-left: 0; border-radius: 0 0 10px 10px; box-shadow: 0 0 0 1px var(--line), 0 6px 18px rgba(0, 30, 50, 0.05); gap: 10px; font-size: 15px; font-weight: 400; line-height: 1.6; color: var(--ink-2); }
 .layout .rk-panel .n { color: var(--title); font-weight: 600; }
-.layout .rk-panel p:last-child:not(:first-child) { margin-top: 2px; padding-top: 12px; border-top: 1px solid var(--line); font-size: 14px; line-height: 1.55; color: var(--muted); }
-.layout .rk-panel p:last-child:not(:first-child) .n { color: var(--ink-2); }
 .layout .rk[aria-expanded="true"] { margin-top: 8px; }
 .layout .rk-panel p { text-wrap: pretty; }
-/* Exposure's panel no longer ends with a caveat, so its last sentence stays in the body text rather than the footnote style. */
-body:has(.mast__nav a[data-tab="exposure"][aria-current]) .layout .rk-panel p:last-child { margin-top: 0; padding-top: 0; border-top: 0; font-size: 15px; line-height: 1.6; color: var(--ink-2); }
-body:has(.mast__nav a[data-tab="exposure"][aria-current]) .layout .rk-panel p:last-child .n { color: var(--title); }
