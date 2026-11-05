@@ -171,7 +171,7 @@ function mountReset(root) {
 const syncReset = () => { const b = document.querySelector(".reset-btn"); if (!b) return; b.hidden = sel.type === "all"; b.querySelector(".reset-btn__t").textContent = sel.type === "all" ? "" : `Clear “${entityOf(sel).short}” and show all occupations`; };
 
 /* ---------- the same page on every tab ---------- */
-const TABS = [{ id: "emerging", href: "emerging.html", label: "Emerging titles & skills", short: "Emerging" }, { id: "evolving", href: "evolving.html", label: "Evolving occupations", short: "Evolving" }, { id: "exposure", href: "exposure.html", label: "Exposure & transitions", short: "Exposure" }];
+const TABS = [{ id: "emerging", href: "emerging.html", label: "Emerging titles & skills", short: "Emerging" }, { id: "evolving", href: "evolving.html", label: "Evolving occupations", short: "Evolving" }, { id: "exposure", href: "exposure.html", label: "Exposure & transitions", short: "Exposure" }, { id: "methodology", href: "methodology.html", label: "Methodology", short: "Methodology" }];
 const syncTabs = () => document.querySelectorAll(".mast__nav a").forEach((a) => { a.href = TABS.find((t) => t.id === a.dataset.tab).href; });   // the tabs are plain links: a selection stays on the page it was made on
 const EYEBROWS = { emerging: { chart: "New tasks, by year" }, evolving: { chart: "Jobs and pay, by occupation" }, exposure: { chart: "Exposure and pay, by occupation" } };
 /* Two-tone headline: the first number (with its "up" or "down") is wrapped in a mark so the stylesheet can color it. Text is untouched. */
@@ -189,11 +189,14 @@ function mountHeadlineMark(h) {
   const obs = new MutationObserver(() => { obs.disconnect(); markKeyNumber(h); obs.observe(h, { childList: true, characterData: true, subtree: true }); });
   obs.observe(h, { childList: true, characterData: true, subtree: true });
 }
+/* The header row on every page, including the Methodology page, which has no chart or selection. */
+const headerHtml = (page) => `<header class="mast"><div class="mast__in">
+    <div class="mast__brand"><img class="mast__logo" src="assets/scsp-logo.png" width="647" height="130" alt="Special Competitive Studies Project"><span class="mast__rule" aria-hidden="true"></span><span class="mast__name">National Skills Dashboard</span></div>
+    <nav class="mast__nav" aria-label="Dashboard sections">${TABS.map((t) => `<a href="${t.href}" data-tab="${t.id}" title="${esc(t.label)}" aria-label="${esc(t.label)}"${t.id === page ? ' aria-current="page"' : ""}>${esc(t.short)}</a>`).join("")}</nav></div></header>`;
+function mountHeader(page) { document.body.insertAdjacentHTML("afterbegin", headerHtml(page)); stickHeader(); }
 function mountShell(cfg) {
   const ey = EYEBROWS[cfg.page] || {};
-  document.body.insertAdjacentHTML("afterbegin", `<header class="mast"><div class="mast__in">
-    <div class="mast__brand"><img class="mast__logo" src="assets/scsp-logo.png" width="647" height="130" alt="Special Competitive Studies Project"><span class="mast__rule" aria-hidden="true"></span><span class="mast__name">National Skills Dashboard</span></div>
-    <nav class="mast__nav" aria-label="Dashboard sections">${TABS.map((t) => `<a href="${t.href}" data-tab="${t.id}" title="${esc(t.label)}" aria-label="${esc(t.label)}"${t.id === cfg.page ? ' aria-current="page"' : ""}>${esc(t.short)}</a>`).join("")}</nav></div></header>
+  document.body.insertAdjacentHTML("afterbegin", `${headerHtml(cfg.page)}
   <main class="layout">
     <aside class="rail" aria-label="Choose what to look at">
       <div id="s1"></div><div id="reset"></div>

@@ -6,7 +6,7 @@ set -euo pipefail
 [ $# -ge 1 ] && [ -n "$1" ] || { echo "Usage: $0 \"commit message\"" >&2; exit 1; }
 SRC="${NSD_SRC:-$HOME/Documents/SkillsDashboard/prototype-scsp-view/prototype}"
 cd "$(dirname "$0")"
-FILES="evolving.html emerging.html exposure.html assets/nsd.css assets/nsd.js assets/scsp-logo.png"
+FILES="evolving.html emerging.html exposure.html methodology.html assets/nsd.css assets/nsd.js assets/scsp-logo.png"
 for f in $FILES; do [ -f "$SRC/$f" ] || { echo "Missing $SRC/$f" >&2; exit 1; }; done
 mkdir -p assets
 for f in $FILES; do cp "$SRC/$f" "$f"; done
@@ -14,7 +14,7 @@ python3 apply_site_overrides.py                  # re-apply noindex and the bann
 python3 - <<'PY'                                # cache-busting: ?v=<hash of nsd.css + nsd.js> on the asset links, so browsers reload changed files
 import hashlib, re
 v = hashlib.md5(open("assets/nsd.css", "rb").read() + open("assets/nsd.js", "rb").read()).hexdigest()[:8]
-for page in ("evolving.html", "emerging.html", "exposure.html"):
+for page in ("evolving.html", "emerging.html", "exposure.html", "methodology.html"):
     html = open(page, encoding="utf-8").read()
     new = re.sub(r'(assets/nsd\.(?:css|js))(?:\?v=\w+)?"', lambda m: m.group(1) + "?v=" + v + '"', html)
     open(page, "w", encoding="utf-8").write(new)

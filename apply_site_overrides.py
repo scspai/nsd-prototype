@@ -6,7 +6,7 @@
 import os
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-ALL_PAGES = ["evolving.html", "emerging.html", "exposure.html", "index.html"]
+ALL_PAGES = ["evolving.html", "emerging.html", "exposure.html", "methodology.html", "index.html"]
 
 ROBOTS = '<meta name="robots" content="noindex, nofollow">'
 
