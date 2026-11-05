@@ -63,7 +63,7 @@ const ORDER = GROUPS.slice().sort((a, b) => b.j19 - a.j19), HALF = Math.ceil(Mat
 {
   const list = comparable(OCC), behind = list.filter((o) => band(o.r19) === "behind").length;
   const hi = GROUPS.reduce((a, b) => (b.j19 > a.j19 ? b : a)), lo = GROUPS.reduce((a, b) => (b.j19 < a.j19 ? b : a));
-  mountHero({ h: "America added jobs. A third of occupations lost ground on pay.",
+  mountHero({ h: "Jobs and Pay, By the Numbers", sub: "Discover where employment growth outpaced—or lagged behind—real wage growth.",
     tiles: [{ n: pct(ALLJ), label: "jobs since May 2019" }, { n: `${behind} <span>of ${list.length}</span>`, label: `occupations where pay fell behind the cost of living (by more than ${TOL}%)`, red: true },
       { n: `${pct(hi.j19)} <span>vs.</span> ${pct(lo.j19)}`, label: `${lcAll(short(hi))} vs. ${lcAll(short(lo))} jobs since 2019`, long: "longer" }] });
 }
