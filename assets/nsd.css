@@ -682,3 +682,6 @@ body:has(> main.layout) { background: var(--page-tint); }
 .layout .rk-panel p:last-child:not(:first-child) .n { color: var(--ink-2); }
 .layout .rk[aria-expanded="true"] { margin-top: 8px; }
 .layout .rk-panel p { text-wrap: pretty; }
+/* Exposure's panel no longer ends with a caveat, so its last sentence stays in the body text rather than the footnote style. */
+body:has(.mast__nav a[data-tab="exposure"][aria-current]) .layout .rk-panel p:last-child { margin-top: 0; padding-top: 0; border-top: 0; font-size: 15px; line-height: 1.6; color: var(--ink-2); }
+body:has(.mast__nav a[data-tab="exposure"][aria-current]) .layout .rk-panel p:last-child .n { color: var(--title); }
