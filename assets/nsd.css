@@ -644,3 +644,11 @@ body:has(> main.layout) { background: var(--surface); }
 .layout .seg button[aria-pressed="true"] { background: var(--title); color: var(--surface); }
 .layout th { border-bottom: 1px solid var(--line); color: var(--muted); }
 .layout .body--sample { border-radius: 8px; }
+
+/* A faint cool tint below the banner, so the white banner reads as its own band. Chart and readout panels turn white
+   with a hairline border to stand off the tint. Delete this block to go back to an all-white page. */
+:root { --page-tint: #f4f6f8; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --page-tint: #0f1b21; } }
+:root[data-theme="dark"] { --page-tint: #0f1b21; }
+body:has(> main.layout) { background: var(--page-tint); }
+.layout .plate, .layout .readout { background: var(--surface); border: 1px solid var(--line); }
