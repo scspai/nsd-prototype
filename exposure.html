@@ -64,7 +64,7 @@ const ORDER = GROUPS.filter((g) => GST[g.code].w !== null).sort((a, b) => GST[b.
 {
   const hi = ORDER[0], lo = ORDER[ORDER.length - 1];
   const topC = GROUPS.slice().sort((a, b) => GST[b.code].cornerJobs - GST[a.code].cornerJobs)[0], topShare = Math.round(GST[topC.code].cornerJobs / jobsOf(CORNER) * 100);
-  mountHero({ h: "Where AI Meets Work", sub: "Explore AI’s impact across occupations.",
+  mountHero({ h: "Where AI Meets Work", sub: "Explore AI exposure across occupations.",
     tiles: [{ n: (jobsOf(CORNER) / 1e6).toFixed(1) + "M", label: "workers in high-AI-overlap, below-median-pay occupations", red: true },
       { n: `${CORNER.length}`, label: `occupations in that group; ${lcAll(short(topC))} accounts for ${topShare}% of its workers` },
       { n: `${Math.round(GST[hi.code].w)} <span>vs.</span> ${Math.round(GST[lo.code].w)}`, label: `average AI overlap score, ${lcAll(short(hi))} vs. ${lcAll(short(lo))} work`, long: true }],
