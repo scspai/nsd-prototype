@@ -680,3 +680,65 @@ body:has(> main.layout) { background: var(--page-tint); }
 .layout .rk-panel .n { color: var(--title); font-weight: 600; }
 .layout .rk[aria-expanded="true"] { margin-top: 8px; }
 .layout .rk-panel p { text-wrap: pretty; }
+
+/* ---------- Methodology, in the report style of "American AI Sentiment in 2026": the same opening banner as the other
+   pages, the tinted page below it, numbered parts ("PART 1") with a large navy heading, text on the left and its note on
+   the right, every figure in a white card with a "FIGURE n" label above its title, and the three calculations behind
+   one tab bar. Overrides the earlier Methodology rules; delete this block to return to them. ---------- */
+body:has(> .mt) { background: var(--page-tint); }
+.mt { padding: 0 24px 120px; }
+.mt-doc { background: transparent; }
+.mt-ch { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); column-gap: 72px; row-gap: 32px; padding: 96px 0 0; border-top: 0; align-items: start; }
+.mt-ch > * { grid-row: auto !important; }
+.mt-ch__n { grid-column: 1 / -1 !important; border-top: 0; padding: 0; width: auto; margin-bottom: -18px;
+  font-family: var(--font-mono); font-weight: 600; font-size: 12px; line-height: 1.4; letter-spacing: 0.14em; text-transform: uppercase; color: var(--brand-ink); }
+.mt-ch__n::before { content: "Part "; }
+.mt-ch__text { grid-column: 1 !important; max-width: 700px; }
+.mt-ch__text h2, .mt-refs h2 { font-size: clamp(28px, 2.5vw, 36px); line-height: 1.15; letter-spacing: -0.01em; color: var(--title); margin-bottom: 20px; }
+.mt-ch__text p { font-size: 17px; line-height: 1.65; font-weight: 300; color: var(--ink-2); }
+.mt-ch__aside { grid-column: 2 !important; padding: 0; align-self: end; }
+.mt-note { background: var(--surface); border: 1px solid var(--line); border-left: 1px solid var(--line); border-radius: 8px; padding: 22px 24px; font-size: 14.5px; line-height: 1.6; color: var(--ink-2); }
+.mt-note b { font-family: var(--font-mono); font-size: 11.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--brand-ink); margin-bottom: 8px; }
+/* figures: white cards, label first, then the title, the graphic and the note */
+.mt-fig, .mt-fig--full { grid-column: 1 / -1 !important; margin: 0; display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 28px 30px 24px; }
+.mt-fig > figcaption.mt-cap { display: contents; }
+.mt-cap b { order: -2; font-family: var(--font-mono); font-weight: 600; font-size: 11px; letter-spacing: 0.14em; color: var(--panel-label); padding: 0; margin-bottom: 6px; }
+.mt-fig__t { order: -1; font-weight: 600; font-size: 16px; color: var(--title); margin-bottom: 22px; }
+.mt-cap > span { order: 5; display: block; margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--line); font-size: 13.5px; line-height: 1.55; color: var(--muted); max-width: none; }
+/* part 4: the three calculations in one tabbed card */
+.mt-tabs { grid-column: 1 / -1; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.mt-tabs__bar { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-bottom: 1px solid var(--line); }
+.mt-tabs__bar button { background: var(--surface); border: 0; border-left: 1px solid var(--line); padding: 16px 12px; font-size: 15px; font-weight: 600; color: var(--title); cursor: pointer; }
+.mt-tabs__bar button:first-child { border-left: 0; }
+.mt-tabs__bar button:hover { background: var(--page-tint); }
+.mt-tabs__bar button[aria-selected="true"] { background: var(--title); color: var(--surface); }
+.mt-tabs__bar button:focus-visible { outline: 2px solid var(--brand); outline-offset: -4px; }
+.mt-tabs .mt-case { grid-column: auto; border-top: 0; padding: 32px 32px 8px; column-gap: 48px; }
+.mt-tabs .mt-case__head h3 span { display: none; }
+.mt-tabs .mt-case__head h3 { color: var(--title); font-size: 22px; }
+.mt-tabs .mt-fig { border: 0; border-radius: 0; padding: 0; background: transparent; margin-bottom: 32px; }
+.mt-tabs .mt-fig--span, .mt-tabs .mt-drill { padding-top: 24px; border-top: 1px solid var(--line); border-radius: 0; }
+.mt-steps li::before { border-color: var(--title); color: var(--title); }
+.mt-steps--row li, .mt-steps--row li:first-child { border-top-color: var(--title); }
+/* part 5: one white card per page */
+.mt-read { grid-column: 1 / -1 !important; padding-bottom: 0; gap: 24px; }
+.mt-read__col { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 24px 26px 10px; }
+.mt-read h3 { border-bottom: 1px solid var(--line); font-size: 19px; }
+/* citations */
+.mt-refs { margin-top: 96px; padding: 34px 36px 26px; border: 1px solid var(--line); border-top: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
+.mt-refs h2 { font-size: 24px; }
+@media (max-width: 900px) {
+  .mt-ch { grid-template-columns: minmax(0, 1fr); padding-top: 72px; row-gap: 24px; }
+  .mt-ch__text, .mt-ch__aside { grid-column: 1 !important; }
+  .mt-fig, .mt-fig--full { padding: 22px 18px 18px; }
+  .mt-tabs .mt-case { padding: 24px 18px 4px; }
+  .mt-refs { padding: 26px 20px 18px; margin-top: 72px; }
+}
+@media (max-width: 600px) {
+  .mt { padding: 0 16px 72px; }
+  .mt-tabs__bar button { padding: 13px 4px; font-size: 14px; }
+}
+/* inside the tabs, keep each case's two-column split: steps beside the worked example / chart */
+.mt-tabs .mt-case > .mt-fig:not(.mt-fig--span):not(.mt-drill) { grid-column: auto !important; }
+.mt-tabs .mt-case--flip .mt-steps { padding-top: 56px; }
+@media (max-width: 900px) { .mt-tabs .mt-case > .mt-fig { grid-column: 1 / -1 !important; } .mt-tabs .mt-case--flip .mt-steps { padding-top: 0; } }
