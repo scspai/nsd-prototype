@@ -923,10 +923,6 @@ html { scroll-padding-top: 150px; }
 .yr-sw--stripe { background: repeating-linear-gradient(135deg, var(--mark) 0 3px, var(--surface) 3px 5px); }
 .yr-sw--zone { background: var(--zone); border: 1px solid var(--line); }
 .yr-key__n { color: var(--muted); margin-left: auto; }
-.layout .cmp { border-top: 1px solid var(--line); padding-top: 14px; margin-top: 4px; }
-.layout .cmp__off { font-size: 14px; color: var(--ink-2); }
-.layout .cmp .linkish { color: var(--title); text-decoration-color: var(--brand); }
-.layout .cmp .linkish::after { content: " \2192"; }
 .yr-sw--rest { background: var(--dot); }
 
 /* tasks-by-year, second pass: a headline figure over the chart, muted history, a navy recent period, the drone batch in red */
