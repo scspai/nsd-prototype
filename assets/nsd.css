@@ -939,3 +939,10 @@ html { scroll-padding-top: 150px; }
 .yr-sw--light { background: var(--sunken); border: 1px solid var(--line); }
 .yr-sw--drone { background: repeating-linear-gradient(135deg, var(--brand) 0 3px, var(--surface) 3px 5px); }
 @media (max-width: 600px) { .yr-head { gap: 12px; } .yr-head__t b { font-size: 15px; } }
+
+/* tasks as dots */
+#chart .yr-dot { transition: transform .12s; transform-box: fill-box; transform-origin: center; }
+#chart .yr-dot:hover, #chart .yr-dot.kb-on { transform: scale(1.6); stroke: var(--brand) !important; stroke-width: 1.5 !important; }
+.yr-dot-k { width: 10px; height: 10px; border-radius: 50%; background: var(--mark); display: inline-block; }
+.yr-dot-k--light { background: var(--sunken); border: 1px solid var(--line); }
+.yr-dot-k--ring { background: var(--surface); border: 2px solid var(--mark); }
