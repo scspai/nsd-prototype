@@ -126,7 +126,7 @@ function drawExposure(Wd) {
 }
 
 /* ---------- sections: closed, each ending in one plain source line ---------- */
-const secOcc = addSection("Occupations and their exposure", ""), secCorner = addSection("The high-exposure, below-median-pay group", "");
+const secOcc = addSection("Compare all jobs", ""), secCorner = addSection("The high-exposure, below-median-pay group", "");
 setGroupSection(secOcc);
 secOcc.body.innerHTML = `<div id="occ-tbl"></div>`;
 const exCols = [
@@ -182,8 +182,8 @@ function render(e) {
   renderRank(rankRows(), e); readout(e);
   const list = listOf(e), plotted = OCC.filter((o) => o.exp !== null && o.w[3] !== null).length;
   $("chart-note").textContent = `${e.type === "all" ? "" : "Highlighted: " + (e.type === "occ" ? e.name : e.short) + ". "}Each dot is an occupation; size shows jobs in 2025. The shaded area is the high-exposure, below-median-pay group. ${plotted} of ${OCC.length} occupations are plotted; the rest have no score or no published pay. Exposure is overlap with the work, not job loss. Sources: ${SRC_EXPOSURE}.`;
-  secOcc.setTitle(e.type === "all" ? "Every occupation" : `Occupations in ${lcAll(e.type === "occ" ? short(e.o.grp) : e.short)}`);
-  secOcc.setSummary(`${list.length} occupations`);
+  secOcc.setTitle(e.type === "all" ? "Compare all jobs" : `Jobs in ${e.type === "occ" ? short(e.o.grp) : e.short}`);
+  secOcc.setSummary(`${list.length} jobs · sort by AI exposure or pay`);
   tableList = list; tablePaint(); paintCorner(e); cornerPaint(); redraw();
   if (!first) fadeIn(["headline", "plate"]);
 }

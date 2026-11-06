@@ -155,7 +155,7 @@ function readout(e) {
 
 /* ---------- sections: closed, each ending in one plain source line ---------- */
 const DW = W.displaced_workers;
-const secOcc = addSection("Every occupation", ""), secDw = addSection("Displaced workers, January 2026", `${DW.long_tenured_displaced_millions} million workers (BLS)`);
+const secOcc = addSection("Compare all jobs", ""), secDw = addSection("Displaced workers, January 2026", `${DW.long_tenured_displaced_millions} million workers (BLS)`);
 /* ---------- displaced workers: BLS Displaced Worker Survey, national and five broad categories; does not change with the selection ---------- */
 secDw.body.innerHTML = (() => {
   const st = DW.status_at_survey_pct, ft = DW.full_time_reemployed_earning_as_much_or_more_pct, ks = Object.keys(ft).sort(), now = ft[ks[1]], before = ft[ks[0]];
@@ -223,8 +223,8 @@ function render(e) {
   renderRank(rankRows(), e); readout(e);
   const plotted = OCC.filter((o) => o.own19 && o.r19 !== null).length, nd = dagger(OCC), list = listOf(e);
   $("chart-note").textContent = `${e.type === "occ" && !e.o.own19 ? `${e.name} is not plotted: BLS has no own 2019 figure for it (†). ` : e.type === "all" ? "" : "Highlighted: " + (e.type === "occ" ? e.name : e.short) + ". "}Dot size shows jobs in 2025; red dots are occupations whose median pay is below the national median of ${usd.format(PAY_MEDIAN)}. The shaded band is about even with prices (within ±${TOL}%). ${nd} of ${OCC.length} occupations are not plotted: BLS has no own 2019 figure for them (†), so they are never counted. Search for one, or choose “Since May 2021” in the table. Sources: ${SRC_JOBS}; BLS CPI-U annual averages; BLS Employment Projections, 2025–35. Pay is ahead or behind prices only beyond ±${TOL}%.`;
-  secOcc.setTitle(e.type === "all" ? "Every occupation" : `Occupations in ${lcAll(e.type === "occ" ? short(e.o.grp) : e.short)}`);
-  secOcc.setSummary(`${list.length} occupations`);
+  secOcc.setTitle(e.type === "all" ? "Compare all jobs" : `Jobs in ${e.type === "occ" ? short(e.o.grp) : e.short}`);
+  secOcc.setSummary(`${list.length} jobs · sort by job growth or pay`);
   if (e.type === "occ" && !e.o.own19) { base = "21"; secOcc.body.querySelectorAll("[data-base]").forEach((x) => x.setAttribute("aria-pressed", x.dataset.base === base)); }
   tableList = list; tablePaint();
   $("sd-key").innerHTML = e.type === "featured" ? SAMPLE_SKILLS[e.id].map(([n], j) => `<span style="display:inline-flex;align-items:center;gap:8px;margin-right:18px;font-size:14px"><svg width="30" height="4" viewBox="0 0 30 4" aria-hidden="true" style="--f:var(--mark)"><line class="sd-line sd-s${j + 1}" x1="0" y1="2" x2="30" y2="2"/></svg>${esc(n)}</span>`).join("") : "";
