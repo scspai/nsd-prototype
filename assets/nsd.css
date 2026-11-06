@@ -947,3 +947,6 @@ html { scroll-padding-top: 150px; }
 /* plain-language pass: the method note is one sentence, labelled simply */
 .layout .method::before { content: "Note"; }
 .main > .src a { color: var(--title); font-weight: 600; text-decoration-color: var(--brand); }
+
+/* The one-line note under each chart is removed; its points live on the Methodology page. Delete this rule to bring it back. */
+.layout #method { display: none; }
