@@ -884,3 +884,6 @@ html { scroll-padding-top: 150px; }
 .layout .tbl.is-scroll thead th { position: sticky; top: 0; z-index: 2; background: var(--surface); box-shadow: inset 0 -1px 0 var(--line); }
 .layout .tasklist.is-scroll { border-radius: 10px; }
 @media (max-width: 600px) { .layout .is-scroll { max-height: 70vh; } }
+
+/* switch between the views inside a combined section */
+.layout .view-seg { justify-self: start; margin-bottom: 4px; }
