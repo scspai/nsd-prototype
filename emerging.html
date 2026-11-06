@@ -139,7 +139,7 @@ function drawYears(Wd) {
 }
 
 /* ---------- sections: closed, each ending in one plain source line ---------- */
-const secOccs = addSection("Occupations with emerging tasks", ""), secTasks = addSection("Emerging tasks", ""), secWave = addSection("The drone wave of May 2025", "");
+const secOccs = addSection("Occupations with emerging tasks", ""), secTasks = addSection("Emerging tasks", "");
 /* ---------- job postings: Indeed's national series, its own section; national only, so it does not change with the selection ---------- */
 const secPost = addSection("What job postings show", `${p1(INDV[indLast])} of US postings mention AI keywords`);
 const indShort = (m) => new Date(m + "-01T00:00:00Z").toLocaleDateString("en-US", { month: "short", year: "numeric", timeZone: "UTC" });
@@ -201,16 +201,6 @@ function paintTasks() {
   const tl = $("task-list").querySelector(".tasklist"); if (tl) capList(tl.querySelectorAll(".task"), tl);
 }
 $("src-f").addEventListener("change", paintTasks);
-function paintWave(e) {
-  const cnt = {}; WAVE.forEach((t) => { cnt[t.g] = (cnt[t.g] || 0) + 1; });
-  const rows = Object.entries(cnt).sort((a, b) => b[1] - a[1]), max = rows[0][1], mineW = WAVE.filter((t) => tasksOf(e).includes(t)), parent = e.type === "occ" ? e.o.g : e.type === "group" ? e.id : null;
-  secWave.setSummary(`${WAVE.length} occupations in ${waveGroups.size} groups`);
-  secWave.body.innerHTML = `<p>In ${monthName(WAVE_MONTH)} O*NET added a drone or uncrewed-vehicle task to ${WAVE.length} occupations in one release, in ${waveGroups.size} of the 22 groups. It is the clearest case in the file of one technology reaching many kinds of work at once.</p>
-    <div class="bars" id="wave-bars" role="group" aria-label="Occupations in the drone wave, by group">${rows.map(([g, n]) => `<div class="bar${g === parent ? " bar--sel" : ""}"${tipData(short(GBY[g]), `${n} of ${WAVE.length} occupations in the ${monthName(WAVE_MONTH)} drone wave`, "Source: " + SRC_TASKS)}><span>${esc(short(GBY[g]))}</span><div class="bar__track"><div class="bar__fill" style="width:${n / max * 100}%"></div></div><span class="bar__v">${n}</span></div>`).join("")}</div>
-    ${e.type === "all" ? "" : mineW.length ? `<p id="wave-mine">In this selection:</p><ul class="plainlist" aria-labelledby="wave-mine">${mineW.map((t) => `<li>${esc(t.title)}</li>`).join("")}</ul>` : "<p>No occupation in this selection was in the drone wave.</p>"}${srcLine(`${SRC_TASKS}, tasks dated ${WAVE_MONTH} that mention drones or uncrewed vehicles.`)}`;
-  kbChart($("wave-bars"), "Drone wave occupations by group"); capList($("wave-bars").querySelectorAll(".bar"), $("wave-bars"));
-  const wl = secWave.body.querySelector(".plainlist"); if (wl) capList(wl.querySelectorAll("li"), wl);
-}
 secOccs.body.innerHTML = `<div id="occ-tbl"></div>`;
 /* Trial: "Occupations with emerging tasks" and "Emerging tasks" share one section, with a switch between the two views.
    The task view's controls and list move into this section; the separate section is removed. */
@@ -277,7 +267,7 @@ function render(e) {
   $("chart-note").textContent = `${e.type === "all" ? "" : "Highlighted: " + (e.type === "occ" ? e.name : e.short) + ". "}Each bar is the emerging tasks O*NET recorded that year; the striped part of the ${monthName(WAVE_MONTH).split(" ")[1]} bar, more than half of it, is one batch update, when O*NET added drone tasks to ${WAVE.length} occupations at once, not a trend. The last year is partial. Source: ${SRC_TASKS}.`;
   secTasks.setSummary(`${plural(all.length, "task")}`);
   tableOccs = listing.filter((o) => TASKS.some((t) => t.soc === o.soc)); secOccs.setSummary(`${plural(all.length, "task")} in ${tableOccs.length} of ${listing.length} occupations (all years)`); tablePaint();
-  paintTasks(); paintWave(e); redraw();
+  paintTasks(); redraw();
   if (!first) fadeIn(["headline", "plate"]);
 }
 redraw = responsive($("chart"), drawYears);
