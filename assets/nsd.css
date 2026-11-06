@@ -913,3 +913,18 @@ html { scroll-padding-top: 150px; }
 .pc__src { color: var(--muted) !important; font-size: 12.5px !important; }
 @media (max-width: 700px) { .pc__head, .pc__note { padding-left: 18px; padding-right: 18px; } .pc__stats { grid-template-columns: repeat(2, minmax(0, 1fr)); margin: 18px 18px 4px; }
   .pc__stat:nth-child(3) { border-left: 0; } .pc__stat:nth-child(n+3) { border-top: 1px solid var(--line); } }
+
+/* Emerging's tasks-by-year chart: soft hover column, a key under the chart, the postings pointer as a quiet link row. */
+#chart .yr-hit { fill: transparent; }
+#chart .yr-hit:hover, #chart .yr-hit.kb-on { fill: var(--page-tint); stroke: none; }
+.yr-key { display: flex; flex-wrap: wrap; gap: 8px 22px; align-items: center; font-size: 13px; color: var(--ink-2); padding: 2px 4px 4px; }
+.yr-key span { display: inline-flex; align-items: center; gap: 8px; }
+.yr-sw { width: 12px; height: 12px; border-radius: 3px; background: var(--mark); display: inline-block; }
+.yr-sw--stripe { background: repeating-linear-gradient(135deg, var(--mark) 0 3px, var(--surface) 3px 5px); }
+.yr-sw--zone { background: var(--zone); border: 1px solid var(--line); }
+.yr-key__n { color: var(--muted); margin-left: auto; }
+.layout .cmp { border-top: 1px solid var(--line); padding-top: 14px; margin-top: 4px; }
+.layout .cmp__off { font-size: 14px; color: var(--ink-2); }
+.layout .cmp .linkish { color: var(--title); text-decoration-color: var(--brand); }
+.layout .cmp .linkish::after { content: " \2192"; }
+.yr-sw--rest { background: var(--dot); }
