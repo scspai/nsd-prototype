@@ -231,7 +231,7 @@ function stickHeader() {
   const apply = () => {
     const y = scrollY;
     m.classList.toggle("is-scrolled", y > 2);
-    const compact = diff > 0 && y >= diff;
+    const compact = diff > 0 && y >= diff && innerWidth <= 600;   // the header keeps its full size on desktop and tablet; only phones, where it stacks tall, get the compact version
     if (compact !== m.classList.contains("is-compact")) { m.classList.toggle("is-compact", compact); m.style.marginBottom = compact ? diff + "px" : ""; }
   };
   addEventListener("scroll", apply, { passive: true });
