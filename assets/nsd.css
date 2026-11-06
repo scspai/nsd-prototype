@@ -887,3 +887,7 @@ html { scroll-padding-top: 150px; }
 
 /* switch between the views inside a combined section */
 .layout .view-seg { justify-self: start; margin-bottom: 4px; }
+
+/* Rail spacing: the empty "Clear selection" slot no longer adds a second gap under the search box. */
+#reset:not(:has(.reset-btn:not([hidden]))) { display: none; }
+.layout .rail { gap: 32px; }
