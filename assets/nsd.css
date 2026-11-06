@@ -801,3 +801,79 @@ html { scroll-padding-top: 150px; }
   font-family: var(--font-mono); font-size: 12.5px; color: var(--ink-2); white-space: nowrap; }
 .count-note:empty { display: none; }
 @media (max-width: 600px) { .filters > div:first-child { grid-template-columns: minmax(0, 1fr); gap: 8px; width: 100%; } }
+
+/* ---------- Tables and task lists inside the sections, in the report style: a white card with soft corners, small grey
+   column labels, roomy rows that tint on hover, navy names, figures in mono, and "Show all" as an outlined button. ---------- */
+.layout .tbl { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; }
+.layout .tbl table { font-size: 15px; }
+.layout .tbl--occ table { min-width: 760px; }
+.layout .tbl--occ th:first-child, .layout .tbl--occ td:first-child { min-width: 280px; width: auto; }
+.layout .tbl th { font-family: var(--font-mono); font-weight: 500; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted);
+  padding: 14px 20px 12px; border-bottom: 1px solid var(--line); background: var(--surface); }
+.layout .tbl th button { font: inherit; color: inherit; letter-spacing: inherit; text-transform: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+.layout .tbl th button:hover { color: var(--title); }
+.layout .tbl th[aria-sort="ascending"], .layout .tbl th[aria-sort="descending"] { color: var(--title); font-weight: 600; }
+.layout .tbl td { padding: 16px 20px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.layout .tbl tbody tr:last-child td { border-bottom: 0; }
+.layout .tbl tbody tr:hover td { background: var(--page-tint, var(--bg)); }
+.layout .tbl td.n { font-size: 14px; color: var(--ink-2); padding-top: 18px; }
+.layout .tbl .linkish { color: var(--title); font-weight: 600; font-size: 15.5px; line-height: 1.35; text-decoration: none; }
+.layout .tbl .linkish:hover { text-decoration: underline; text-decoration-color: var(--brand); text-decoration-thickness: 2px; }
+.layout .tbl .soc { margin-top: 4px; font-family: var(--font-mono); font-size: 12px; color: var(--muted); }
+.layout .alt-btn { font-family: var(--font-body); font-size: 12.5px; color: var(--muted); text-decoration-style: solid; text-decoration-color: var(--line); }
+.layout .alt-btn:hover { color: var(--title); text-decoration-color: var(--title); }
+/* "Show all": an outlined button under the card */
+.layout .more { display: inline-flex; align-items: center; gap: 8px; margin: 14px 0 0; padding: 9px 18px; border: 1px solid var(--line); border-radius: 999px;
+  background: var(--surface); color: var(--title); font-size: 14px; font-weight: 600; text-decoration: none; }
+.layout .more::after { content: "\2193"; font-weight: 400; }
+.layout .more[aria-expanded="true"]::after { content: "\2191"; }
+.layout .more:hover { border-color: var(--title); }
+/* the task list */
+.layout .tasklist { max-height: none; overflow: visible; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; }
+.layout .task { grid-template-columns: 64px minmax(0, 1fr); gap: 18px; padding: 18px 20px; border-bottom: 1px solid var(--line); }
+.layout .task:last-child { border-bottom: 0; }
+.layout .task:hover { background: var(--page-tint, var(--bg)); }
+.task__d { display: grid; justify-items: center; align-content: start; gap: 1px; padding: 6px 0 7px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
+.task__d span { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--brand-ink); }
+.task__d b { font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--title); }
+.task__t { margin: 0; font-size: 15.5px; line-height: 1.5; color: var(--ink); text-wrap: pretty; }
+.task__m { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; margin-top: 8px; font-size: 13px; color: var(--muted); }
+.task__occ { font-weight: 600; color: var(--title); }
+.task__soc { font-family: var(--font-mono); font-size: 12px; }
+.task__spec { font-style: italic; }
+.task__occ + .task__soc::before { content: "\00b7"; margin-right: 8px; color: var(--line); }
+.tag { display: inline-flex; align-items: center; height: 22px; padding: 0 9px; border-radius: 999px; background: var(--page-tint, var(--bg)); border: 1px solid var(--line); font-size: 12px; color: var(--ink-2); white-space: nowrap; }
+.tag--wave { border-color: var(--brand); color: var(--brand-ink); }
+.layout .readout .tasklist { border: 0; border-radius: 0; background: transparent; }
+.layout .readout .task { padding-left: 0; padding-right: 0; }
+.layout .readout .task:hover { background: transparent; }
+/* section footnotes under a table or list */
+.layout details .body > .note:last-child, .layout details .body > p.note { font-size: 13px; line-height: 1.55; color: var(--muted); max-width: 80ch; }
+@media (max-width: 600px) {
+  .layout .tbl th, .layout .tbl td { padding-left: 14px; padding-right: 14px; }
+  .layout .task { grid-template-columns: 52px minmax(0, 1fr); gap: 12px; padding: 14px; }
+}
+.layout .tbl--occ table { min-width: 860px; }
+.layout .tbl--occ th:first-child, .layout .tbl--occ td:first-child { width: 38%; min-width: 300px; }
+.task__d { align-self: start; }
+.layout .more { margin-bottom: 14px; }
+@media (max-width: 600px) { .task__occ + .task__soc::before { display: none; } }
+.layout .tbl th:first-child, .layout .tbl td:first-child { width: 40%; min-width: 260px; }
+.layout .tbl table, .layout .tbl--occ table { min-width: 700px; }
+.layout .tbl--occ th:first-child, .layout .tbl--occ td:first-child, .layout .tbl th:first-child, .layout .tbl td:first-child { min-width: 220px; width: 34%; }
+.layout .tbl th { padding-left: 14px; padding-right: 14px; }
+.layout .tbl td { padding-left: 14px; padding-right: 14px; }
+.layout .tbl th:first-child, .layout .tbl td:first-child { padding-left: 20px; }
+.layout .tbl th:last-child, .layout .tbl td:last-child { padding-right: 20px; }
+.layout .tbl table, .layout .tbl--occ table { min-width: 0; }
+.layout .tbl th { font-family: var(--font-body); font-size: 12.5px; font-weight: 500; letter-spacing: 0; text-transform: none; }
+.layout .tbl th[aria-sort="ascending"], .layout .tbl th[aria-sort="descending"] { font-weight: 600; }
+/* when a table is wider than its card, a soft shadow at the edge shows there is more to scroll to */
+.layout .tbl th:first-child, .layout .tbl td:first-child { min-width: 200px; width: 30%; }
+.layout .tbl th { background: transparent; }
+.layout .tbl { background:
+  linear-gradient(to right, var(--surface) 30%, transparent) left center / 40px 100% no-repeat local,
+  linear-gradient(to left, var(--surface) 30%, transparent) right center / 40px 100% no-repeat local,
+  radial-gradient(farthest-side at 0 50%, rgba(0, 30, 50, 0.14), transparent) left center / 14px 100% no-repeat scroll,
+  radial-gradient(farthest-side at 100% 50%, rgba(0, 30, 50, 0.14), transparent) right center / 14px 100% no-repeat scroll,
+  var(--surface); }
