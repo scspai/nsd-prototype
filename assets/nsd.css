@@ -742,3 +742,14 @@ body:has(> .mt) { background: var(--page-tint); }
 .mt-tabs .mt-case > .mt-fig:not(.mt-fig--span):not(.mt-drill) { grid-column: auto !important; }
 .mt-tabs .mt-case--flip .mt-steps { padding-top: 56px; }
 @media (max-width: 900px) { .mt-tabs .mt-case > .mt-fig { grid-column: 1 / -1 !important; } .mt-tabs .mt-case--flip .mt-steps { padding-top: 0; } }
+
+/* Methodology banner, after the Tech Scorecard's: centered, a small outlined pill above the title, no figures. Same white
+   banner colors and texture as the other pages. */
+.hero--center .hero__in { text-align: center; padding: 96px 24px 100px; }
+.hero__pill { display: inline-block; margin: 0 0 22px; padding: 6px 16px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface);
+  font-family: var(--font-mono); font-weight: 500; font-size: 12.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--brand-ink); }
+.hero--center .hero__h { text-align: center; margin: 0 auto; max-width: 16em; }
+.hero--center .hero__sub { text-align: center; margin: 22px auto 0; max-width: 34em; text-wrap: balance; }
+.hero--center::after { right: -14%; }
+@media (max-width: 960px) { .hero--center .hero__in { padding: 64px 24px 68px; } }
+@media (max-width: 600px) { .hero--center .hero__in { padding: 48px 20px 52px; } }
