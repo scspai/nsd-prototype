@@ -928,3 +928,14 @@ html { scroll-padding-top: 150px; }
 .layout .cmp .linkish { color: var(--title); text-decoration-color: var(--brand); }
 .layout .cmp .linkish::after { content: " \2192"; }
 .yr-sw--rest { background: var(--dot); }
+
+/* tasks-by-year, second pass: a headline figure over the chart, muted history, a navy recent period, the drone batch in red */
+.yr-head { display: flex; align-items: center; gap: 18px; padding: 4px 0 8px; }
+.yr-head__n { font: 700 clamp(44px, 4.2vw, 60px) var(--font-display); letter-spacing: -.03em; line-height: 1; color: var(--title); }
+.yr-head__t { display: grid; gap: 3px; }
+.yr-head__t b { font-size: 17px; font-weight: 600; color: var(--title); }
+.yr-head__t span { font-size: 14px; color: var(--muted); }
+.yr-sw--old { background: var(--dot); }
+.yr-sw--light { background: var(--sunken); border: 1px solid var(--line); }
+.yr-sw--drone { background: repeating-linear-gradient(135deg, var(--brand) 0 3px, var(--surface) 3px 5px); }
+@media (max-width: 600px) { .yr-head { gap: 12px; } .yr-head__t b { font-size: 15px; } }
