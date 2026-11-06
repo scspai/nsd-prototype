@@ -891,3 +891,25 @@ html { scroll-padding-top: 150px; }
 /* Rail spacing: the empty "Clear selection" slot no longer adds a second gap under the search box. */
 #reset:not(:has(.reset-btn:not([hidden]))) { display: none; }
 .layout .rail { gap: 32px; }
+
+/* "What job postings show": a white chart card with a stat strip, a shaded area line and a hover guide. */
+.pc { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+.pc__head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px 24px; flex-wrap: wrap; padding: 26px 30px 0; }
+.pc__label { margin: 0 0 6px; font: 600 11px var(--font-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--panel-label); }
+.pc__title { margin: 0; font-size: 17px; font-weight: 600; color: var(--title); }
+.pc__nat { display: inline-flex; align-items: center; height: 26px; padding: 0 11px; border: 1px solid var(--line); border-radius: 999px; background: var(--page-tint); font-size: 12.5px; color: var(--ink-2); white-space: nowrap; }
+.pc__stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin: 22px 30px 6px; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+.pc__stat { padding: 14px 18px; border-left: 1px solid var(--line); }
+.pc__stat:first-child { border-left: 0; }
+.pc__stat dt { font-size: 12.5px; color: var(--muted); margin-bottom: 4px; }
+.pc__stat dd { margin: 0; font: 700 26px var(--font-display); letter-spacing: -.02em; color: var(--title); }
+.pc__stat--lead { background: var(--zone); }
+.pc__stat--lead dd { color: var(--brand); }
+.pc__chart { padding: 8px 18px 0 14px; }
+.pc .pc-hit:hover, .pc .pc-hit.kb-on { stroke: none; }
+.pc__note { padding: 16px 30px 22px; border-top: 1px solid var(--line); background: var(--page-tint); display: grid; gap: 8px; }
+.pc__note p { margin: 0; font-size: 13.5px; line-height: 1.55; color: var(--ink-2); max-width: 90ch; }
+.pc__note b { color: var(--title); }
+.pc__src { color: var(--muted) !important; font-size: 12.5px !important; }
+@media (max-width: 700px) { .pc__head, .pc__note { padding-left: 18px; padding-right: 18px; } .pc__stats { grid-template-columns: repeat(2, minmax(0, 1fr)); margin: 18px 18px 4px; }
+  .pc__stat:nth-child(3) { border-left: 0; } .pc__stat:nth-child(n+3) { border-top: 1px solid var(--line); } }
