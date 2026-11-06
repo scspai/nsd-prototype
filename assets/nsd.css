@@ -784,3 +784,20 @@ html { scroll-padding-top: 150px; }
   .mast__nav a { font-size: 15.5px; padding: 6px 0 5px; }
   html { scroll-padding-top: 130px; }
 }
+
+/* Filters inside the sections (e.g. "Identified by" on Emerging): the same quiet label and rounded field as the search
+   box, a custom chevron, and the count set as a small pill on the field's line. */
+.filters { align-items: center; gap: 10px 16px; margin-bottom: 6px; }
+.filters > div:first-child { display: grid; grid-template-columns: auto minmax(220px, 300px); align-items: center; gap: 0 14px; }
+.filters label { margin: 0; font-weight: 500; font-size: 11px; letter-spacing: 0.14em; color: var(--muted); }
+.layout .sel-select, .sel-select { appearance: none; -webkit-appearance: none; height: 44px; padding: 0 42px 0 16px; font-size: 15px; font-weight: 500; color: var(--ink);
+  background: var(--surface) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%235b6f80' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 14px center / 16px 16px; border: 1px solid var(--line); border-radius: 10px;
+  box-shadow: 0 1px 2px rgba(0, 30, 50, 0.04); cursor: pointer; transition: border-color 0.15s, box-shadow 0.15s; }
+.sel-select:hover { border-color: var(--neutral); }
+.sel-select:focus { outline: none; border-color: var(--title); box-shadow: 0 0 0 3px rgba(0, 51, 78, 0.12); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .sel-select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%239fb3c2' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); } }
+:root[data-theme="dark"] .sel-select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%239fb3c2' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); }
+.count-note { display: inline-flex; align-items: center; height: 28px; padding: 0 12px; border-radius: 999px; background: var(--page-tint, var(--bg)); border: 1px solid var(--line);
+  font-family: var(--font-mono); font-size: 12.5px; color: var(--ink-2); white-space: nowrap; }
+.count-note:empty { display: none; }
+@media (max-width: 600px) { .filters > div:first-child { grid-template-columns: minmax(0, 1fr); gap: 8px; width: 100%; } }
