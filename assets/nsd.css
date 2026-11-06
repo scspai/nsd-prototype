@@ -753,3 +753,8 @@ body:has(> .mt) { background: var(--page-tint); }
 .hero--center::after { right: -14%; }
 @media (max-width: 960px) { .hero--center .hero__in { padding: 64px 24px 68px; } }
 @media (max-width: 600px) { .hero--center .hero__in { padding: 48px 20px 52px; } }
+
+/* Header tabs in title case, after the Tech Scorecard: "Emerging" rather than "EMERGING". The current page is a touch bolder. */
+.mast__nav a { text-transform: none; letter-spacing: 0; font-size: 16px; font-weight: 500; color: var(--ink-2); }
+.mast__nav a:hover { color: var(--ink); }
+.mast__nav a[aria-current="page"] { color: var(--title); font-weight: 600; }
