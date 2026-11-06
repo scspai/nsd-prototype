@@ -950,3 +950,51 @@ html { scroll-padding-top: 150px; }
 
 /* The one-line note under each chart is removed; its points live on the Methodology page. Delete this rule to bring it back. */
 .layout #method { display: none; }
+
+/* the high-exposure, below-median-pay section: the rule as an equation, then one bar of where those workers are */
+.cg-rule { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 12px; padding: 18px 20px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; }
+.cg-chip { display: inline-flex; align-items: center; height: 32px; padding: 0 14px; border-radius: 999px; background: var(--zone); border: 1px solid color-mix(in oklab, var(--brand) 35%, transparent); color: var(--brand-ink); font-weight: 600; font-size: 14.5px; }
+.cg-plus, .cg-eq { font: 600 18px var(--font-mono); color: var(--muted); }
+.cg-res { font-size: 15px; color: var(--ink-2); }
+.cg-res b { font: 700 26px var(--font-display); letter-spacing: -.02em; color: var(--brand); margin-right: 4px; vertical-align: -2px; }
+.cg-h { margin: 6px 0 -4px; font: 600 11px var(--font-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--panel-label); }
+.cg-stack { display: flex; gap: 3px; height: 74px; border-radius: 10px; overflow: hidden; }
+.cg-seg { min-width: 0; display: grid; align-content: center; gap: 2px; padding: 0 14px; overflow: hidden; white-space: nowrap; }
+.cg-seg b { font: 700 22px var(--font-display); }
+.cg-seg span { font-size: 12.5px; overflow: hidden; text-overflow: ellipsis; }
+.cg-seg--1 { background: var(--brand); color: #fff; }
+.cg-seg--2 { background: color-mix(in oklab, var(--brand) 55%, var(--surface)); color: #fff; }
+.cg-seg--3 { background: var(--sunken); color: var(--ink-2); padding: 0 8px; }
+.cg-seg--3 b { font-size: 15px; }
+.cg-seg.is-sel { box-shadow: inset 0 0 0 3px var(--title); }
+.cg-seg:hover { filter: brightness(1.06); }
+
+/* Exposure: the high-exposure, below-median-pay group, set like a news graphic (type and hairlines, no boxes) */
+.cy { display: grid; gap: 26px; max-width: 860px; }
+.cy-lead { display: grid; grid-template-columns: auto 1fr; gap: 24px; align-items: baseline; padding-bottom: 22px; border-bottom: 1px solid var(--line); }
+.cy-big { font: 700 60px var(--font-display); letter-spacing: -.035em; color: var(--brand); line-height: .9; white-space: nowrap; }
+.cy-lead p { margin: 0; font-size: 19px; line-height: 1.45; color: var(--ink); max-width: 34em; }
+.cy-facts { display: flex; margin: 0; }
+.cy-facts div { padding: 0 28px; border-left: 1px solid var(--line); }
+.cy-facts div:first-child { padding-left: 0; border-left: 0; }
+.cy-facts dt { font-size: 13px; color: var(--muted); margin-bottom: 2px; }
+.cy-facts dd { margin: 0; font: 600 22px var(--font-display); color: var(--title); letter-spacing: -.01em; }
+.cy-list { border-top: 1px solid var(--ink-2); }
+.cy-r { display: grid; grid-template-columns: minmax(0, 1fr) 90px 110px 190px; gap: 16px; align-items: center; padding: 13px 0; border-bottom: 1px solid var(--line); font-size: 15px; }
+.cy-r--h { padding: 10px 0; font-size: 13px; color: var(--muted); }
+.cy-r--h span:nth-child(2), .cy-r--h span:nth-child(3) { text-align: right; }
+.cy-name .linkish { font-weight: 500; color: var(--ink); text-decoration: none; }
+.cy-name .linkish:hover { text-decoration: underline; text-decoration-color: var(--brand); }
+.cy-n { text-align: right; color: var(--ink-2); }
+.cy-m { display: grid; grid-template-columns: 1fr 64px; gap: 10px; align-items: center; font-size: 13px; color: var(--ink-2); }
+.cy-m i { height: 4px; background: var(--sunken); border-radius: 2px; }
+.cy-m u { display: block; height: 100%; background: var(--brand); border-radius: 2px; }
+.cy-foot { display: grid; gap: 6px; }
+.cy-all { justify-self: start; background: none; border: 0; padding: 0; font: inherit; font-weight: 600; font-size: 15px; color: var(--title); text-decoration: underline; text-decoration-color: var(--brand); text-underline-offset: 4px; cursor: pointer; }
+.cy-foot p { margin: 0; font-size: 13.5px; color: var(--muted); }
+@media (max-width: 600px) {
+  .cy-lead { grid-template-columns: 1fr; gap: 8px; } .cy-big { font-size: 46px; }
+  .cy-facts { flex-wrap: wrap; row-gap: 14px; } .cy-facts div { padding: 0 18px; } .cy-facts div:nth-child(3) { padding-left: 0; border-left: 0; }
+  .cy-r { grid-template-columns: 1fr auto; gap: 4px 12px; } .cy-r--h { display: none; } .cy-name, .cy-m { grid-column: 1 / -1; }
+  .cy-n { text-align: left; } .cy-n::before { content: attr(data-l) " "; color: var(--muted); }
+}
