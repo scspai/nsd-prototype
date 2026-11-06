@@ -877,3 +877,10 @@ html { scroll-padding-top: 150px; }
   radial-gradient(farthest-side at 0 50%, rgba(0, 30, 50, 0.14), transparent) left center / 14px 100% no-repeat scroll,
   radial-gradient(farthest-side at 100% 50%, rgba(0, 30, 50, 0.14), transparent) right center / 14px 100% no-repeat scroll,
   var(--surface); }
+
+/* "Show all" opens the full list inside its card, which then scrolls on its own instead of stretching the page.
+   Table headers stay pinned while the rows scroll. */
+.layout .is-scroll { max-height: 560px; overflow-y: auto; overscroll-behavior: contain; }
+.layout .tbl.is-scroll thead th { position: sticky; top: 0; z-index: 2; background: var(--surface); box-shadow: inset 0 -1px 0 var(--line); }
+.layout .tasklist.is-scroll { border-radius: 10px; }
+@media (max-width: 600px) { .layout .is-scroll { max-height: 70vh; } }
