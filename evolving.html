@@ -93,7 +93,7 @@ const PAY_MEDIAN = W.total.wage[3];
 function drawScatter(Wd) {
   if (!current) return;
   const e = current, box = $("chart"); box.innerHTML = "";
-  const narrow = Wd < 640, H = narrow ? 500 : Math.round(Math.min(680, Math.max(520, Wd * 0.7))), L = narrow ? 50 : 66, R = narrow ? 26 : 124, T = 16, Bm = 62;
+  const narrow = Wd < 640, H = narrow ? 500 : Math.round(Math.min(680, Math.max(520, Wd * 0.7))), L = narrow ? 50 : 66, R = narrow ? 26 : 148, T = 16, Bm = 62;
   const pts = OCC.filter((o) => o.own19 && o.r19 !== null && o.pr !== null);
   // The axes cover the 1st to 99th percentile, so a handful of extreme occupations cannot squeeze the rest into a corner.
   // Anything beyond is drawn at the edge, counted in the note, and its tooltip gives the real value.
@@ -104,22 +104,22 @@ function drawScatter(Wd) {
   $("clip-note").textContent = out.length ? ` ${out.length} occupations lie beyond the plotted range and are drawn at its edge; their tooltips give the real values.` : "";
   const X = (v) => L + (cl(v, xlo, xhi) - xlo) / (xhi - xlo) * (Wd - L - R), Yv = (v) => T + (1 - (cl(v, ylo, yhi) - ylo) / (yhi - ylo)) * (H - T - Bm);
   const s = svgEl("svg", { viewBox: `0 0 ${Wd} ${H}`, width: Wd, height: H, role: "img", "aria-label": `${pts.length} occupations: projected change in jobs to 2035 against pay change after inflation since 2019` }, box);
-  svgEl("rect", { x: L, y: Yv(TOL), width: Wd - L - R, height: Yv(-TOL) - Yv(TOL), fill: css("--ink"), "fill-opacity": 0.06 }, s);
+  svgEl("rect", { x: L, y: Yv(TOL), width: Wd - L - R, height: Yv(-TOL) - Yv(TOL), fill: css("--sunken"), "fill-opacity": 0.7, rx: 3 }, s);
   const g = svgEl("g", { class: "grid" }, s);
-  for (let v = xlo; v <= xhi; v += 10) { svgEl("line", { x1: X(v), x2: X(v), y1: T, y2: H - Bm }, g); txt(s, X(v), H - Bm + 18, (v > 0 ? "+" : v < 0 ? "−" : "") + Math.abs(v) + "%", { "text-anchor": "middle" }); }
-  for (let v = ylo; v <= yhi; v += 10) { svgEl("line", { x1: L, x2: Wd - R, y1: Yv(v), y2: Yv(v) }, g); txt(s, L - 8, Yv(v) + 4, (v > 0 ? "+" : v < 0 ? "−" : "") + Math.abs(v) + "%", { "text-anchor": "end" }); }
-  svgEl("line", { x1: X(0), x2: X(0), y1: T, y2: H - Bm, stroke: css("--ink-2"), "stroke-width": 1.5 }, s);
-  txt(s, (L + Wd - R) / 2, H - 14, "Projected change in jobs, 2025–35", { "text-anchor": "middle", class: "lab2" });
-  const my = (T + H - Bm) / 2; txt(s, 14, my, "Pay since 2019, after inflation", { "text-anchor": "middle", class: "lab2", transform: `rotate(-90 14 ${my})` });
+  for (let v = xlo; v <= xhi; v += 10) { txt(s, X(v), H - Bm + 18, (v > 0 ? "+" : v < 0 ? "−" : "") + Math.abs(v) + "%", { "text-anchor": "middle" }); }
+  for (let v = ylo; v <= yhi; v += 10) { if (v) svgEl("line", { x1: L, x2: Wd - R, y1: Yv(v), y2: Yv(v), "stroke-dasharray": "2 5" }, g); txt(s, L - 8, Yv(v) + 4, (v > 0 ? "+" : v < 0 ? "−" : "") + Math.abs(v) + "%", { "text-anchor": "end" }); }
+  svgEl("line", { x1: X(0), x2: X(0), y1: T, y2: H - Bm, stroke: css("--ink-2"), "stroke-width": 1 }, s); svgEl("line", { x1: L, x2: Wd - R, y1: H - Bm, y2: H - Bm, stroke: css("--line") }, s);
+  txt(s, (L + Wd - R) / 2, H - 14, "Projected job change, 2025–35 →", { "text-anchor": "middle", class: "lab2" });
+  const my = (T + H - Bm) / 2; if (!narrow) txt(s, 14, my, "Pay vs. prices since 2019 →", { "text-anchor": "middle", class: "lab2", transform: `rotate(-90 14 ${my})` });
   if (!narrow) {   // band names sit in the right margin, so no dot can cover them
-    const bl = (y, t) => txt(s, Wd - R + 10, y, t, { class: "lab2", style: "font-style:italic" });
-    bl(Yv(TOL) - 8, "Ahead of prices"); bl(Yv(0) + 4, `About even (±${TOL}%)`); bl(Yv(-TOL) + 22, "Behind prices");
+    const bl = (y, t, c) => txt(s, Wd - R + 12, y, t, { class: "lab", style: `font-size:13px;fill:${c}` });
+    bl(Yv(TOL) - 10, "▲ Ahead of prices", css("--real")); bl(Yv(0) + 5, `≈ About even`, css("--ink-2")); bl(Yv(-TOL) + 20, "▼ Behind prices", css("--negative"));
   }
-  const rad = (o) => (narrow ? 2 : 2.4) + Math.sqrt(o.emp[3] / 1000) * (narrow ? 0.14 : 0.2), mark = css("--mark"), dot = css("--dot"), surf = css("--surface"), red = css("--brand");
+  const rad = (o) => Math.min(narrow ? 12 : 18, (narrow ? 2 : 2.4) + Math.sqrt(o.emp[3] / 1000) * (narrow ? 0.12 : 0.16)), mark = css("--mark"), dot = css("--dot"), surf = css("--surface"), red = css("--brand");
   const lowPay = (o) => o.w[3] !== null && o.w[3] < PAY_MEDIAN;
   const order = pts.slice().sort((a, b) => (inSel(e, a) - inSel(e, b)) || b.emp[3] - a.emp[3]);
   order.forEach((o) => {
-    const on = inSel(e, o), c = svgEl("circle", { cx: X(o.pr), cy: Yv(o.r19), r: rad(o), fill: on ? (lowPay(o) ? red : mark) : dot, "fill-opacity": on ? (lowPay(o) ? 0.9 : (e.type === "all" ? 0.55 : 0.85)) : 0.55, stroke: on ? surf : "none", "stroke-width": 1.2, "data-soc": o.soc }, s);
+    const on = inSel(e, o), c = svgEl("circle", { cx: X(o.pr), cy: Yv(o.r19), r: rad(o), fill: on ? (lowPay(o) ? red : mark) : dot, "fill-opacity": on ? (lowPay(o) ? 0.82 : (e.type === "all" ? 0.6 : 0.85)) : 0.35, stroke: on ? surf : "none", "stroke-width": 0.8, "data-soc": o.soc }, s);
     setTip(c, `${o.t} (${o.soc})`, `Pay ${pct(o.r19)} after inflation since 2019, ${band(o.r19) === "even" ? "about even with prices" : band(o.r19) === "ahead" ? "ahead of prices" : "behind prices"} · jobs ${pct(o.pr)} projected to 2035 · ${fmt.format(o.emp[3])} jobs in 2025${o.w[3] !== null ? ` · median pay ${usd.format(o.w[3])}, ${lowPay(o) ? "below" : "at or above"} the national median` : ""}${out.includes(o) ? " (beyond the plotted range, drawn at the edge)" : ""}`, "Sources: BLS OEWS 2019 (MB3) and 2025; BLS CPI-U; BLS Employment Projections 2025–35");
     c.addEventListener("click", () => setSel({ type: "occ", id: o.soc }));
   });
