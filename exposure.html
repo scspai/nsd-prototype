@@ -104,7 +104,7 @@ function drawExposure(Wd) {
   { const st = { class: "lab", "text-anchor": "end", style: `paint-order:stroke;stroke:${css("--surface")};stroke-width:4px;fill:${css("--brand-ink")}` };
     if (narrow) {}
     else { const z = { class: "lab", style: `font-size:13px;fill:${css("--brand-ink")}` }, zy = (Yv(MEDIAN) + Yv(wLo)) / 2; txt(s, Wd - R + 12, zy - 2, "High exposure,", z); txt(s, Wd - R + 12, zy + 15, "below-median pay", z); } }
-  const rad = (o) => Math.min(narrow ? 13 : 20, Math.max(2.5, Math.sqrt(o.emp[3] / 4000) * (narrow ? 0.55 : 0.62))), mark = css("--mark"), dot = css("--dot"), surf = css("--surface");
+  const rad = (o) => Math.min(narrow ? 18 : 30, Math.max(2.5, Math.sqrt(o.emp[3] / 4000) * (narrow ? 0.7 : 0.85))), mark = css("--mark"), dot = css("--dot"), surf = css("--surface");
   pts.slice().sort((a, b) => (inSel(e, a) - inSel(e, b)) || b.emp[3] - a.emp[3]).forEach((o) => {
     const on = inSel(e, o), c = svgEl("circle", { cx: X(o.exp), cy: Yv(o.w[3]), r: rad(o), "fill-opacity": on ? (inCorner(o) ? 0.85 : (e.type === "all" ? 0.55 : 0.85)) : 0.35, fill: on ? (inCorner(o) ? css("--brand") : mark) : dot, stroke: on ? surf : "none", "stroke-width": 0.8, "data-soc": o.soc }, s);
     setTip(c, `${o.t} (${o.soc})`, `Exposure percentile ${Math.round(o.exp)} · median pay ${usd.format(o.w[3])} · ${fmt.format(o.emp[3])} jobs${inCorner(o) ? " · in the high-exposure, below-median-pay group" : ""}`, `Sources: ${SRC_EXPOSURE}`);
