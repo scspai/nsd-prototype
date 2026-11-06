@@ -50,7 +50,7 @@ const ALL_TOUCHED = touched(OCC);
 /* ---------- the opening section: every number comes from the same values as the headline below ---------- */
 {
   const nAll = TASKS.length, nRecent = TASKS.filter(isRecent).length, nAI = aiMentions(TASKS);
-  mountHero({ h: "The New Frontier of Work", sub: "Explore new tasks emerging across occupations.",
+  mountHero({ h: "The New Frontier of Work", sub: "Explore new tasks emerging across occupations, and which groups of jobs are taking on the most new work.",
     tiles: [{ n: fmt.format(nAll), label: "new tasks on record", red: true }, { n: fmt.format(nRecent), label: `new tasks recorded since ${RECENT}` },
       { n: `${fmt.format(ALL_TOUCHED)} <span>of ${fmt.format(OCC.length)}</span>`, label: `occupations with new work since ${RECENT}` }] });
 }
