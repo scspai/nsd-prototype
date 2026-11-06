@@ -770,3 +770,17 @@ html { scroll-padding-top: 150px; }
 @media (max-width: 1060px) and (min-width: 900px) { .mast__logo { height: 44px; } .mast__name { font-size: 21px; } .mast__nav { gap: 4px 22px; } .mast__nav a { font-size: 15.5px; } .mast__in { gap: 18px 22px; } }
 @media (max-width: 899px) { .mast__in { padding-top: 26px; padding-bottom: 26px; } .mast__logo { height: 50px; } .mast__name { font-size: 23px; } }
 @media (max-width: 600px) { .mast__logo { height: 44px; } .mast__name { font-size: 21px; } .mast__nav { gap: 4px 24px; } .mast__nav a { font-size: 16px; } html { scroll-padding-top: 110px; } }
+
+/* Half-screen fixes. Charts: let every chart box shrink with its panel, so a window made narrower after loading
+   redraws the chart at the new width instead of leaving it wider than its panel. */
+.plate > *, .main > *, .chart, .mt-fig > *, .mt-case > * { min-width: 0; }
+.chart { max-width: 100%; }
+/* Header between phone and laptop widths (a half-screen window): tighter, so it doesn't take a third of the screen. */
+@media (max-width: 899px) and (min-width: 601px) {
+  .mast__in { padding-top: 16px; padding-bottom: 14px; gap: 8px 28px; }
+  .mast__logo { height: 42px; }
+  .mast__name { font-size: 20px; }
+  .mast__nav { gap: 4px 28px; }
+  .mast__nav a { font-size: 15.5px; padding: 6px 0 5px; }
+  html { scroll-padding-top: 130px; }
+}
