@@ -998,3 +998,6 @@ html { scroll-padding-top: 150px; }
   .cy-r { grid-template-columns: 1fr auto; gap: 4px 12px; } .cy-r--h { display: none; } .cy-name, .cy-m { grid-column: 1 / -1; }
   .cy-n { text-align: left; } .cy-n::before { content: attr(data-l) " "; color: var(--muted); }
 }
+.cy-rows.is-scroll { max-height: 420px; overflow-y: auto; overscroll-behavior: contain; border-bottom: 1px solid var(--line); }
+.cy-rows.is-scroll .cy-r:last-child { border-bottom: 0; }
+.cy-r[hidden] { display: none; }
