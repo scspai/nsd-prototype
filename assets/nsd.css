@@ -943,3 +943,7 @@ html { scroll-padding-top: 150px; }
 .yr-dot-k--light { background: var(--sunken); border: 1px solid var(--line); }
 .yr-dot-k--ring { background: var(--surface); border: 2px solid var(--mark); }
 #chart .cum-hit:hover, #chart .cum-hit.kb-on { fill: var(--mark); fill-opacity: .15; stroke: var(--mark); stroke-width: 1.5; }
+
+/* plain-language pass: the method note is one sentence, labelled simply */
+.layout .method::before { content: "Note"; }
+.main > .src a { color: var(--title); font-weight: 600; text-decoration-color: var(--brand); }

@@ -135,7 +135,7 @@ function searchResults(q) {
 }
 function mountSearch(root, label) {
   root.classList.add("search");
-  root.innerHTML = `<label for="q-${root.id}">${esc(label)}</label><input id="q-${root.id}" type="search" role="combobox" aria-expanded="false" aria-controls="ql-${root.id}" aria-autocomplete="list" autocomplete="off" placeholder="Try nurses, 15-1252 or computer"><ul id="ql-${root.id}" role="listbox" hidden></ul>`;
+  root.innerHTML = `<label for="q-${root.id}">${esc(label)}</label><input id="q-${root.id}" type="search" role="combobox" aria-expanded="false" aria-controls="ql-${root.id}" aria-autocomplete="list" autocomplete="off" placeholder="Try nurses or engineers"><ul id="ql-${root.id}" role="listbox" hidden></ul>`;
   const input = root.querySelector("input"), list = root.querySelector("ul"); let res = [], act = -1;
   const close = () => { list.hidden = true; input.setAttribute("aria-expanded", "false"); input.removeAttribute("aria-activedescendant"); act = -1; };
   const paint = () => {
@@ -211,7 +211,7 @@ function mountShell(cfg) {
       <div class="readout" id="readout" aria-live="polite"></div>
       <section aria-label="Detail" id="details"></section>
       <section aria-label="Coming with new data" id="coming"></section>
-      <p class="src">Everything on this page is real BLS, O*NET or AIOE data except the section marked Sample.</p>
+      <p class="src"><a href="methodology.html">Sources and method →</a></p>
     </div>
   </main>
   <div class="tip" id="tip" hidden></div>
@@ -220,7 +220,7 @@ function mountShell(cfg) {
   $("readout").addEventListener("click", (ev) => { if (ev.target.closest("[data-close]")) closeCard(); });
   $("readout").addEventListener("keydown", (ev) => { if (ev.key === "Escape" && sel.type === "occ") { ev.preventDefault(); closeCard(); } });
   mountHeadlineMark($("headline"));
-  mountSearch($("s1"), "Find any occupation or group"); mountReset($("reset")); stickHeader();   // the Featured chips were removed from the page; fields stay reachable through search
+  mountSearch($("s1"), "How is your job changing?"); mountReset($("reset")); stickHeader();   // the Featured chips were removed from the page; fields stay reachable through search
 }
 /* The header sticks to the top. Once the page scrolls it gets a shadow; once the scroll passes the height it can save, it switches to a compact size,
    and a margin keeps the content where it was, so nothing jumps. */
