@@ -946,3 +946,4 @@ html { scroll-padding-top: 150px; }
 .yr-dot-k { width: 10px; height: 10px; border-radius: 50%; background: var(--mark); display: inline-block; }
 .yr-dot-k--light { background: var(--sunken); border: 1px solid var(--line); }
 .yr-dot-k--ring { background: var(--surface); border: 2px solid var(--mark); }
+#chart .cum-hit:hover, #chart .cum-hit.kb-on { fill: var(--mark); fill-opacity: .15; stroke: var(--mark); stroke-width: 1.5; }
