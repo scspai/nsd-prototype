@@ -265,7 +265,7 @@ function render(e) {
   const all = tasksOf(e), listing = listOf(e);
   $("chart-note").textContent = `${e.type === "all" ? "" : "Highlighted: " + (e.type === "occ" ? e.name : e.short) + ". "}Each bar is the emerging tasks O*NET recorded that year; the striped part of the ${monthName(WAVE_MONTH).split(" ")[1]} bar, more than half of it, is one batch update, when O*NET added drone tasks to ${WAVE.length} occupations at once, not a trend. The last year is partial. Source: ${SRC_TASKS}.`;
   secTasks.setSummary(`${plural(all.length, "task")}`);
-  tableOccs = listing.filter((o) => TASKS.some((t) => t.soc === o.soc)); secOccs.setTitle(e.type === "all" ? "Explore all new tasks" : `New tasks in ${e.type === "occ" ? short(e.o.grp) : e.short}`); { const ids = new Set(tableOccs.map((o) => o.soc)), nT = e.type === "occ" ? TASKS.filter((t) => ids.has(t.soc)).length : all.length; secOccs.setSummary(`${plural(nT, "task")} in ${plural(tableOccs.length, "job")} · by job or by task`); } tablePaint();
+  tableOccs = listing.filter((o) => TASKS.some((t) => t.soc === o.soc)); secOccs.setTitle(e.type === "all" ? "Explore all new tasks" : `New tasks in ${e.type === "occ" ? short(e.o.grp) : e.short}`); { const ids = new Set(tableOccs.map((o) => o.soc)), nT = e.type === "occ" ? TASKS.filter((t) => ids.has(t.soc)).length : all.length; secOccs.setSummary(`${plural(nT, "task")} in ${plural(tableOccs.length, "job")} · sort by job or by task`); } tablePaint();
   paintTasks(); redraw();
   if (!first) fadeIn(["headline", "plate"]);
 }
