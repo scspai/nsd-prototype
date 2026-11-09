@@ -1001,3 +1001,6 @@ html { scroll-padding-top: 150px; }
 .cy-rows.is-scroll { max-height: 420px; overflow-y: auto; overscroll-behavior: contain; border-bottom: 1px solid var(--line); }
 .cy-rows.is-scroll .cy-r:last-child { border-bottom: 0; }
 .cy-r[hidden] { display: none; }
+
+/* Hero tile labels: even line breaks, no one-word last lines */
+.hero__tile dt { text-wrap: balance; }
