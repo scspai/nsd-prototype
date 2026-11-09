@@ -173,7 +173,7 @@ const syncReset = () => { const b = document.querySelector(".reset-btn"); if (!b
 /* ---------- the same page on every tab ---------- */
 const TABS = [{ id: "emerging", href: "emerging.html", label: "Emerging titles & skills", short: "Emerging" }, { id: "evolving", href: "evolving.html", label: "Evolving occupations", short: "Evolving" }, { id: "exposure", href: "exposure.html", label: "Exposure & transitions", short: "Exposure" }, { id: "methodology", href: "methodology.html", label: "Methodology", short: "Methodology" }];
 const syncTabs = () => document.querySelectorAll(".mast__nav a").forEach((a) => { a.href = TABS.find((t) => t.id === a.dataset.tab).href; });   // the tabs are plain links: a selection stays on the page it was made on
-const EYEBROWS = { emerging: { chart: "New tasks, by year" }, evolving: { chart: "Jobs and pay, by occupation" }, exposure: { chart: "Exposure and pay, by occupation" } };
+const EYEBROWS = { emerging: { chart: "New tasks recorded each year" }, evolving: { chart: "Jobs and pay, by occupation" }, exposure: { chart: "Exposure and pay, by occupation" } };
 /* Two-tone headline: the first number (with its "up" or "down") is wrapped in a mark so the stylesheet can color it. Text is untouched. */
 const KEY_NUMBER = /(?:(?:up|down) )?[−+-]?\d+(?:,\d{3})*(?:\.\d+)?%?/g, BARE_YEAR = /^(?:19|20)\d\d$/;   // a bare year is not the key number
 function markKeyNumber(root) {
