@@ -172,11 +172,10 @@ function readout(e) {
   const box = $("readout");
   if (e.type !== "occ") { box.innerHTML = ""; box.hidden = true; return; }
   box.hidden = false;
-  const o = e.o, tools = o.dev.concat(o.aug);
+  const o = e.o;
   box.innerHTML = `${cardX(o.t)}<div class="readout__h"><b>${esc(o.t)}</b><span class="soc">${o.soc} · ${esc(short(o.grp))}</span></div>
     <dl class="kv"><div><dt>Exposure percentile</dt><dd>${o.exp === null ? "no score" : Math.round(o.exp)}</dd></div><div><dt>Median pay, 2025</dt><dd>${o.w[3] ? usd.format(o.w[3]) : "—"}</dd></div><div><dt>Jobs, 2025</dt><dd>${fmt.format(o.emp[3])}</dd></div>
-      <div><dt>In the high-exposure, below-median-pay group</dt><dd>${inCorner(o) ? "Yes" : "No"}</dd></div></dl>
-    <p class="note">${tools.length ? "AI tools among its in-demand tools: " + tools.map(esc).join(", ") + "." : "None of its in-demand tools has a verified AI feature."} Exposure is overlap with the work, not job loss. Sources: ${SRC_EXPOSURE}; O*NET 31.0.</p>`;
+      <div><dt>In the high-exposure, below-median-pay group</dt><dd>${inCorner(o) ? "Yes" : "No"}</dd></div></dl>`;
 }
 function render(e) {
   const first = !current; current = e;

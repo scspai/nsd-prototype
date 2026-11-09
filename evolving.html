@@ -142,7 +142,7 @@ function readout(e) {
   const box = $("readout");
   if (e.type !== "occ") { box.innerHTML = ""; box.hidden = true; return; }
   box.hidden = false;
-  const o = e.o, b21 = !o.own19, j = b21 ? o.j21 : o.j19, r = b21 ? o.r21 : o.r19, since = b21 ? "2021" : "2019", tools = o.dev.concat(o.aug);
+  const o = e.o, b21 = !o.own19, j = b21 ? o.j21 : o.j19, r = b21 ? o.r21 : o.r19, since = b21 ? "2021" : "2019";
   box.innerHTML = `${cardX(o.t)}<div class="readout__h"><b>${esc(o.t)}</b><span class="soc">${o.soc} · ${esc(short(o.grp))}${b21 ? " · † no 2019 figure" : ""}</span></div>
     <dl class="kv"><div><dt>Jobs, 2025</dt><dd>${fmt.format(o.emp[3])}</dd></div>
       <div><dt>Jobs since ${since}</dt><dd>${j === null ? "—" : `<span class="${chg(j)}">${pct(j)}</span>`}</dd></div>
@@ -150,7 +150,7 @@ function readout(e) {
       <div><dt>Pay since ${since}, after inflation</dt><dd>${r === null ? "—" : `<span class="${payClass(r)}">${pct(r)}</span>`}</dd></div>
       <div><dt>Projected jobs, 2035</dt><dd>${o.pr === null ? "—" : `<span class="${chg(o.pr)}">${pct(o.pr)}</span>`}</dd></div>
       <div><dt>Exposure percentile</dt><dd>${o.exp === null ? "—" : Math.round(o.exp)}</dd></div></dl>
-    <p class="note">${b21 ? "BLS reported this occupation only inside a combined group in 2019, so it is compared from May 2021 and is not plotted or counted. " : ""}${tools.length ? "AI tools among its in-demand tools: " + tools.map(esc).join(", ") + "." : "None of its in-demand tools has a verified AI feature."} Sources: BLS OEWS; BLS CPI-U; BLS Employment Projections, 2025–35; O*NET 31.0; Language Modeling AIOE.</p>`;
+    ${b21 ? `<p class="note">BLS reported this occupation only inside a combined group in 2019, so it is compared from May 2021 and is not plotted or counted.</p>` : ""}`;
 }
 
 /* ---------- sections: closed, each ending in one plain source line ---------- */
